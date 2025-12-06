@@ -2,12 +2,12 @@ Hacksmith v6.0
 Group: SecureStack
 Tool: Geol0c4t
 
-Geol0c4t ("Geolocate") is an automated OSINT tool for building a geographic visualisation of the locations of a person's social media images.
+Geol0c4t ("Geolocate") is an OSINT tool for building a geographic visualisation of the locations of a person's social media posts.
 
-1. The user must input a target person's social media account(s) (supported social media platforms: IG, Facebook, etc)
-2. The tool will collate all their social media posts that contain images, storing each post as a JSON object.
-3. The tool will then attempt to determine the location of each post through various image geolocation techniques (neural-network, EXIF metadata, reverse image search, etc)
-4. Finally, the tool will output a geographic visualisation of the locations of the person's posts. The user can check each location and view the post made there.
+1. The user must input a social media account name (currently only supports Instagram)
+2. Geol0c4t will collate all social media posts that contain images.
+3. Geol0c4t will attempt to determine each post's location through various image geolocation techniques (neural-network, EXIF metadata, reverse image search, etc)
+4. Finally, Geol0c4t renders a geographic visualisation of the post locations on an interactive world map. The user can filter posts based on keyword search and timeline slider.
 
 # Development
 ```
@@ -25,25 +25,27 @@ pip freeze > requirements.txt
 Geol0c4t/
 ├── instascraper/           # Python module that scrapes social media posts
 ├──── output/
-├──────json/                    # caches data on each social media post
-├──────images/                  # caches social media post images downloaded by the tool
+├────── json/                   # caches data on each social media post
+├────── images/                 # caches social media post images downloaded by the tool
 ├── geovisualise/           # Python module that renders the geographic visualisation
 
 # JSON schema
 At each step, our tool works with a JSON file storing data of the person's social media posts. Each post is an object with the following fields:
 - Post URL
-- Photo filepath(s) (photos are cached inside `.\scraped_images`)
-- Geolocation (determined via various image geolocation techniques)
+- Image filepath(s) (photos are cached inside `.\scraped_images`)
+- Post caption
 - Datetime of post
+- Location (determined via various image geolocation techniques)
 
 Example:
 [
     {
         "post_url": "https://www.instagram.com/p/ABC123xyz/",
         "local_image_paths": [
-            ".\scraped_images\post1_img1.jpg",
-            ".\scraped_images\post1_img2.jpg"
+            ".\\scraped_images\\post1_img1.jpg",
+            ".\\scraped_images\\post1_img2.jpg"
         ],
+        "caption": "This is my first post.",
         "date": "2024-01-15 14:32:10",
         "location": {
             "lat": 40.712776,
@@ -53,8 +55,9 @@ Example:
     {
         "post_url": "https://www.instagram.com/p/XYZ789abc/",
         "local_image_paths": [
-            ".\scraped_images\post2_img1.jpg"
+            ".\\scraped_images\\post2_img1.jpg"
         ],
+        "caption": "The food was delicious",
         "date": "2024-02-03 09:12:45",
         "location": {
             "lat": 34.052235,
