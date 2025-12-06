@@ -63,7 +63,7 @@ def create_map(posts, output_file='social_media_map.html'):
     m = folium.Map(
         location=[avg_lat, avg_lon],
         zoom_start=4,
-        tiles='OpenStreetMap'
+        tiles='CartoDB Positron'
     )
     
     # Add fullscreen button
