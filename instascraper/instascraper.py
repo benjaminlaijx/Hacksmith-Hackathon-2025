@@ -5,9 +5,24 @@ import shutil
 import glob
 from datetime import datetime
 from itertools import takewhile, dropwhile, islice
+import argparse
+
+# 1. Initialize the parser
+parser = argparse.ArgumentParser(description="My Downloader Script")
+
+# 2. Add the argument you expect
+#    - '--target': The flag you will use (e.g., --target earthpix)
+#    - type=str: It expects text
+#    - required=True: The script will crash if you don't provide it
+parser.add_argument("--target", type=str, required=True, help="The username to scrape")
+
+# 3. Parse the arguments
+args = parser.parse_args()
+
+# 4. Use the argument in your code
+target_username = args.target
 
 # --- CONFIGURATION ---
-TARGET_USERNAME = "injeffsbelly"  # The account to scrape
 ROOT_OUTPUT_FOLDER = "output" # Main folder
 IMAGES_FOLDER = "images"                # Subfolder for JPGs
 JSON_FOLDER = "json"                    # Subfolder for JSONs
@@ -34,8 +49,8 @@ L = instaloader.Instaloader(
     compress_json=False
 )
 
-print(f"Starting reliable archive for: {TARGET_USERNAME}")
-posts = islice(instaloader.Profile.from_username(L.context, TARGET_USERNAME).get_posts(), 50)
+print(f"Starting reliable archive for: {target_username}")
+posts = islice(instaloader.Profile.from_username(L.context, target_username).get_posts(), 50)
 
 # SINCE = datetime(2025, 9, 1)
 # UNTIL = datetime(2025, 12, 6)
