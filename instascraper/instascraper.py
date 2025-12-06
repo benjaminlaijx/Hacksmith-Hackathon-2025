@@ -34,8 +34,6 @@ L = instaloader.Instaloader(
     compress_json=False
 )
 
-# L.login("YOUR_USER", "YOUR_PASS") # Recommended
-
 print(f"Starting reliable archive for: {TARGET_USERNAME}")
 posts = islice(instaloader.Profile.from_username(L.context, TARGET_USERNAME).get_posts(), 50)
 
