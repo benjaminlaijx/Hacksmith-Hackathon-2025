@@ -37,12 +37,28 @@ At each step, our tool works with a JSON file storing data of the person's socia
 - Datetime of post
 
 Example:
-{
-    "post_url": f"https://www.instagram.com/p/{post.shortcode}/",
-    "local_image_path": full_image_path,
-    "date": str(post.date_local),
-    "location": {
-        "lat": post.location.lat,
-        "lon": post.location.lng,
+[
+    {
+        "post_url": "https://www.instagram.com/p/ABC123xyz/",
+        "local_image_paths": [
+            ".\scraped_images\post1_img1.jpg",
+            ".\scraped_images\post1_img2.jpg"
+        ],
+        "date": "2024-01-15 14:32:10",
+        "location": {
+            "lat": 40.712776,
+            "lon": -74.005974
+        }
+    },
+    {
+        "post_url": "https://www.instagram.com/p/XYZ789abc/",
+        "local_image_paths": [
+            ".\scraped_images\post2_img1.jpg"
+        ],
+        "date": "2024-02-03 09:12:45",
+        "location": {
+            "lat": 34.052235,
+            "lon": -118.243683
+        }
     }
-}
+]
