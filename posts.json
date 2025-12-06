@@ -1,0 +1,28 @@
+[
+    {
+        "post_url": "https://www.instagram.com/p/Cz5vvIlvYzb/?igsh=cHZ5ZXJjMXI2Mzl5",
+        "local_image_paths": [
+            ".\\scraped_images\\post1_img1.jpg",
+            ".\\scraped_images\\post1_img2.jpg"
+        ],
+        "date": "2024-01-15 14:32:10",
+        "caption": "Join div0! We are lorem ipsum",
+        "location": {
+            "lat": 40.712776,
+            "lon": -74.005974
+        }
+    },
+    {
+        "post_url": "https://www.instagram.com/p/Cz5vvIlvYzb/?igsh=cHZ5ZXJjMXI2Mzl5",
+        "local_image_paths": [
+            ".\\scraped_images\\post1_img1.jpg",
+            ".\\scraped_images\\post1_img2.jpg"
+        ],
+        "date": "2025-01-15 14:32:10",
+        "caption": "Join div0! We are lorem ipsum",
+        "location": {
+            "lat": 50.712776,
+            "lon": -50.005974
+        }
+    }
+] 
