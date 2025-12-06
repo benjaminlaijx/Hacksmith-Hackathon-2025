@@ -84,7 +84,7 @@ for post in posts:
         
         # 4. Add to list
         relative_path = os.path.join(final_img_path, new_filename)
-        saved_paths.append(relative_path) 
+        saved_paths.append(os.path.join("instascraper", relative_path))
 
 
     # E. Create JSON with the VERIFIED path
