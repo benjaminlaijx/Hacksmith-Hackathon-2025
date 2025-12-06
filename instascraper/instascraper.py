@@ -95,7 +95,7 @@ for post in posts:
 
     post_data = {
         "post_url": f"https://www.instagram.com/p/{post.shortcode}/",
-        "local_image_pats": saved_paths,
+        "local_image_paths": saved_paths,
         "date": str(post.date_local),
         "caption": post.caption if post.caption else "", # The main text
         "location": {
