@@ -1,0 +1,19 @@
+[
+  {
+    "post_url": "https://www.instagram.com/p/ABC123xyz/",
+    "local_image_paths": [
+      ".\\scraped_images\\post1_img1.jpg",
+      ".\\scraped_images\\post1_img2.jpg"
+    ],
+    "date": "2024-01-15 14:32:10",
+    "location": null
+  },
+  {
+    "post_url": "https://www.instagram.com/p/XYZ789abc/",
+    "local_image_paths": [
+      ".\\scraped_images\\post2_img1.jpg"
+    ],
+    "date": "2024-02-03 09:12:45",
+    "location": null
+  }
+]
