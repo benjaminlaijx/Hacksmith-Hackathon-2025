@@ -44,7 +44,7 @@ def predict_latlon(image_path, top_k=1):
     lat, lon = top_pred_gps[0].tolist()
     return {"lat": float(lat), "lon": float(lon)}
 
-def process_json(json_path, output_path="output.json"):
+def process_json(json_path, output_path="Output/output.json"):
     """
     Fill missing lat/lon in JSON using GeoCLIP predictions.
     """
