@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_715e4c0207ede0537cb6fb5a14d6e394 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_715e4c0207ede0537cb6fb5a14d6e394" ></div>
+        
+
+    <style>
+        #timeline-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            z-index: 400;
+            width: 280px;
+            font-family: Arial, sans-serif;
+        }
+        .slider-container {
+            margin: 8px 0;
+        }
+        .slider-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .slider-value {
+            font-size: 10px;
+            color: #666;
+            margin-left: 6px;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #E1306C;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #E1306C;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        #stats {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 10px;
+            color: #666;
+        }
+        .timeline-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #E1306C;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        #keyword-search {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+        }
+        #keyword-search:focus {
+            outline: none;
+            border-color: #E1306C;
+        }
+        .search-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+    </style>
+    
+    <div id="timeline-container">
+        <div class="timeline-title">🔍 Filters</div>
+        
+        <div style="margin-bottom: 10px;">
+            <div class="search-label">Keyword Search</div>
+            <input type="text" id="keyword-search" placeholder="Search captions...">
+        </div>
+        
+        <div class="slider-container">
+            <div class="slider-label">Start: <span class="slider-value" id="start-date-value"></span></div>
+            <input type="range" id="start-slider" min="1723565475000" max="1746949801000" value="1723565475000">
+        </div>
+        <div class="slider-container">
+            <div class="slider-label">End: <span class="slider-value" id="end-date-value"></span></div>
+            <input type="range" id="end-slider" min="1723565475000" max="1746949801000" value="1746949801000">
+        </div>
+        <div id="stats"></div>
+    </div>
+    
+    <script>
+        const markersData = [{"timestamp": 1723565475000, "date": "2024-08-14 00:11:15+08:00", "id": "marker_1", "caption": "\ud83d\udccdthe flair @shanghai\n\nsaw this viral place on tiktok, so had to gave it a try! \n\nwe ordered their fries, mee goreng and satay. fries were quite good, came with a special sauce that tasted weirdly good. \ud83d\ude0a their mee goreng was quite flavourful as well. could definitely taste the wok hey flavour, and it came with lots of liao too. would recommend this if you come here. the satay however was normal tho. did not taste wonderful, and the portion was rather small for the price you are paying for. \ud83d\ude14 \n\noverall, i would give this place a 7/10! it\u2019s more on the pricier side, but i will definitely recommend to come down to this bar as they provide you with super great views from the 57th floor of the ritz carlton hotel.  you can definitely enjoy ur cocktails and food with a stunning scenery of the city skyline! \ud83d\ude0a\ud83d\ude0a\ud83d\ude0a\n\n#food #sgfood #ilovefood #singapore #singaporefood #cafefood #bar #barfood #theflairshanghai #ritzcarlton"}, {"timestamp": 1723612958000, "date": "2024-08-14 13:22:38+08:00", "id": "marker_2", "caption": "\ud83d\udccd\u83b1\u83b1\u5c0f\u7b3c @shanghai huangpu \n\nthis is a must try!!!!\n\nthis place showed up on my \u5c0f\u7ea2\u4e66all the time while doing my research for the trip, so i headed down to this place and it definitely did not disappoint! \n\nwe ordered their basic xlbs, their crab roe xlbs, and the pork cutlet. their basic xlbs were already amazing! the soup tasted super good and the skin was also very chewy. definitely better than the ones we have in sg. \n\nnext up their pork cutlets were super crispy as well! a golden-brown crunchy crust on the outside, with tender and a soft texture that\u2019s easy to bite into. for the price of 15-20yuan, it was definitely worth getting. would rate this a solid 9/10!\n\nlast but not least, the cream of the crop, the crab roe xlbs!!!! the xlbs were filled with rich, vibrant orange crab roe.  the best part of the xlbs was the mix of flavour between the crab roe and the pork fillings. this is easily a 10/10 for me! \ud83d\ude0b\ud83d\ude0b\ud83d\ude0b it was so good that we ordered 1 more portion of this \ud83e\udd17\ud83e\udd17\ud83e\udd17 please get this if you come here!!! \n\n#food #foodporn #singapore #singaporefood #singaporefoodie #musttry #shanghai #ilovefood #xiaolongbao #healthyfood #foodie #singaporelife"}, {"timestamp": 1723714401000, "date": "2024-08-15 17:33:21+08:00", "id": "marker_3", "caption": "\ud83d\udccd\u6caa\u897f\u8001\u5f04\u5802\u9762\u9986 @shanghai \n\n my friends recco this place when i\u2019m coming shanghai, and even claimed that it\u2019s the best noodles ever at nanjing east\u2026 guess what they are right!!! \ud83d\udd25\ud83d\udd25\ud83d\udd25\n\nwe ordered their signature pork liver noodles, their spicy pork noodles and their pork cutlet. the pork cutlet was delicious! definitely on the crispier side and it\u2019s a must get when coming to this store. as for their noodles, the noodles were cooked to perfection! not too soft nor hard, it was super \u201cqq\u201d and makes it super easy to bite into. the noodles were so good that i even asked for additional bowl of noodles and still devoured them all \ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8 the pork liver and meat were also super good! accompanied with the thick black sauce, this is easily a 10/10 for me! super delish yumzzzz\ud83e\udd24\ud83e\udd24\ud83e\udd24\ud83e\udd24\n\ncome down to this shop if you are nearby and i promise u will not regret! \ud83d\ude4f\ud83d\ude4f\ud83d\ude4f\n\n#food #shanghaifood #shanghaifoodie #singapore #singaporefood #singaporelife #ilovefood #foodporn #foodpornshare #china #chinafood"}, {"timestamp": 1723917068000, "date": "2024-08-18 01:51:08+08:00", "id": "marker_4", "caption": "\ud83d\udccdsen sen sushi @jemsingapore \n\nshots were taken on my digicam!!(sony cybershot dsc-t series!!!)\n\ndefinitely on the pricier side compared to other sushi places\u2026 but quality was still up there! the fried squid and the sashimi rlly impressed me\ud83d\ude0b\ud83d\ude0b\ud83d\ude0b the fried squid was super crispy, and the batter taste was not strong. the sashimi slices were super thick and fresh as well. for the price of only 4.80$, i will order it agn when i come back here. do give it a try when you are nearby!! \ud83e\udd17\ud83e\udd17\n\nwould give this a 6/10! still above average, but i would much rather stick to my usual sushiro dinners \ud83d\ude1c\ud83d\ude1c\n\n#singapore #singaporefood #singaporefoodie #food #foodporn #sushi #sushilovers #ilovefood #sushiporn"}, {"timestamp": 1724075436000, "date": "2024-08-19 21:50:36+08:00", "id": "marker_5", "caption": "\ud83d\udccdhot hideout mala @ahothideout (semb)!\n\none of the most famous and most classic malas out there!\n\nwe ordered their signature mala collagen soup as well as their dry mala, with their scrambled eggs and their deep fried ingredients(potatoes, luncheon meat, and fish). what can i say? this tasted like heavennnn\ud83d\ude0b\ud83d\ude0b\ud83d\ude0b their mala collagen soup was super savoury and indulgent. the taste of the mala was not too overwhelming and it\u2019s just nice for me! i can easily say that this is one of the best mala soups i\u2019ve ever tried! as someone who was never a fan of mala tangs, this definitely converted me. come down and try it for urselves! would easily give this an 8/10.\n\nas for their mala, there\u2019s nth really special as compared to other mala places you can find in singapore, but what makes them stand out would be their deep fried ingredients and scrambled eggs. the deep fried potatoes were especially crispy till the point where you can hear the krak krak sounds when you bite down on it!! this is a must get when going hho!! their deep fried luncheon meat and their deep fried fish also goes well with mala. the fried luncheon meat was full of flavour and their deep fried fish was soft and tasty. do rmbr to get bigger slices for the fish because when they deep fry it, the pieces get smaller!!! \ud83e\udd14\ud83e\udd14\ud83e\udd14 \n\ni did not really understand the idea of scrambled eggs with mala at first, but i was wowed when i had my first mouth of their scrambled eggs alongside the mala tang! the eggs were served as described! it was soft, fluffy and had a creamy texture! its a must order for me regardless of whether i\u2019m eating dry or soup. it will make the whole experience better!!! \ud83d\ude09\ud83d\ude09\ud83d\ude09\n\nwhat makes hho stand out from the other mala stores would be the fact that they offer deep fried options for these ingredients. i went to one of the thye guan mala outlets that day and they unfortunately could not deep fry it\ud83d\ude02\ud83d\ude02. what r u waiting for ladies and gentlemen go and eat hho if u havent!!! \ud83d\ude0awe r in 2024!!! \n\n#food #foodporn #singapore #singaporefood #singaporefoodie #ilovefood #iloveeating #eat #mala #ahothideout #ahothideoutsg"}, {"timestamp": 1724247624000, "date": "2024-08-21 21:40:24+08:00", "id": "marker_6", "caption": "\ud83d\udccdpublico\n\nwhat we ordered:\n\ud835\udc29\ud835\udc2b\ud835\udc28\ud835\udc2c\ud835\udc1c\ud835\udc22\ud835\udc2e\ud835\udc2d\ud835\udc2d\ud835\udc28 \ud835\udc30\ud835\udc28\ud835\udc28\ud835\udc1d\ud835\udc1f\ud835\udc22\ud835\udc2b\ud835\udc1e\ud835\udc1d \ud835\udc29\ud835\udc22\ud835\udc33\ud835\udc33\ud835\udc1a\nv generous w the prosciutto! altho its a \u201cthick\u201d crust, it isnt too bready! but still v filling nonetheless\n\n\ud835\udc21\ud835\udc1a\ud835\udc27\ud835\udc1d\ud835\udc1c\ud835\udc2e\ud835\udc2d \ud835\udc29\ud835\udc1a\ud835\udc29\ud835\udc29\ud835\udc1a\ud835\udc2b\ud835\udc1d\ud835\udc1e\ud835\udc25\ud835\udc25\ud835\udc1e \ud835\udc1b\ud835\udc1e\ud835\udc1e\ud835\udc1f \ud835\udc2b\ud835\udc1a\ud835\udc20\ud835\udc2e\na lot of meat and i rly like the pasta texture\u2026.\ud83d\ude1a\n\nfood is on the pricier end incl still water which is $11\u2026ahem @injeffsbelly but the ambience is v nice!\n\noverall: 6.5/10"}, {"timestamp": 1724404570000, "date": "2024-08-23 17:16:10+08:00", "id": "marker_7", "caption": "\ud83d\udccdbrothers ramen @brosramen @ international plaza!!\n\ni can vouch on my life that this is the best ramen in the whole of singapore!!! \ud83d\ude09\ud83d\ude09\ud83d\ude09\n\nas an ultimate ramen lover\ud83e\udd24, i can say that this ramen is 1000000000000000000000000000000000000000/10. \ni came here over 10 times and this is the first time i got the megamen as i wanted a switch from my usual signature brothers ramen. what can i say. this bowl of noodles is the most perfect bowl of noodles you can find in sg. \ud83d\ude04 the broth is insanely thick and the flavour is super duper good. u know ur eating  real, legit ramen when you eat at brothers ramen. i added spice cos i\u2019m a spice lover and oh my god. it\u2019s god tier. the nooodles also super qq. i even added noodles and i absolutely destroyed the whole bowl(on my story). do not call urself a ramen lover if u never eat brothers ramen. \n\nas for their signature brothers ramen, it has more soup and more like traditional ramen. (slide 678). as you can clearly see, the egg alrdy looks bussin. the whole bowl is cooked to perfection. i always add noodles and finish the whole bowl. but i don\u2019t care cos it\u2019s brothers ramen\ud83d\udd25\ud83d\udd25\ud83d\udd25. i think this would be more suitable to everyone as it\u2019s less salty compared to the megamen, because the megamen has less soup. but again, you can adjust the saltiness level of ur ramen while ordering, so you have not excuses not to come here. \ud83d\ude09\n\nfor the price of only 13.90 each for such a big bowl of megamen and brothers ramen, and the fact that it\u2019s located right smack in the middle of cbd, there is really nth u can complain about. and this ramen store opens only from 11-2.45pm and 6-7.45pm, and yet their queues are insane. i rmbr having to queue over like 1 hour one time. but i don\u2019t care because i love brothers ramen. and i love being a fatty bom bom. \nand ok, i\u2019m gonna be honest, u already know it\u2019s good when you see actual japanese people queueing for this ramen shop. this is the only shop in singapore where i see japanese ppl queueing for the food. so yall better come down and try. don\u2019t say bojio. let me say this again. best ramen in singapore!!! \ud83d\ude0b\ud83d\ude0b\ud83d\ude0b\n\n#singapore #ramen #singaporefood #food #ilovefood #foodporn #instagood"}, {"timestamp": 1724681251000, "date": "2024-08-26 22:07:31+08:00", "id": "marker_8", "caption": "\ud83d\udccdxiang xiang hunan cuisine @causewaypointsg !!\n\na good place to get china food to satisfy your cravings!!\n\nate here for the first time and ordered their signature stir fried pork, golden broth sour and spicy fish, their sour and spicy potatoes, and the dry pot pork intestines. \n\nsurprisingly, tho their dry pot pork intestines (pic 1 and 2) is not one of their signature dishes, i would recommend getting this when you come here!!! this was honestly super good \ud83d\udc4d the herbs together with the garlic made the whole dish smell fantastic. the dish fried together with the chili also makes it 10 times more flavorful. easily an 8/10 for me!! \ud83d\ude0b\ud83d\ude0b\n\nthe hunan style stir fried pork (pics 3 and 4) is also another must order when you come here!! the wok hey was super strong, and the texture of the meat was soft and tender. fried together with the sauce, and paired with rice, this dish is a bangerrrrrr. honestly the taste of their stir fried pork reminded me of the stir fried pork i ate recently in china\ud83d\ude2e\u200d\ud83d\udca8 i would say this dish is an easy 8/10 as well. please get this when you come here!!!\ud83d\udd25\ud83d\udd25\ud83d\udd25\n\nthe golden broth sour and spicy fish (pics 5 and 6)was however,  unfortunately disappointing \ud83d\ude22\ud83d\ude22\ud83d\ude22. the broth did not taste sour and spicy at all for me, but rather just the super strong lemon taste. the broth was just filled with lemon, and tho there was peppercorn inside, i couldn\u2019t taste any of it. maybe it\u2019s just me, but i personally am not a fan of this dish and wouldn\u2019t order it again.\ud83d\ude14 maybe it\u2019s a me problem but idk. yall can try it and let me know!! \ud83d\ude42 so sorry but this is a 4/10 for me \ud83d\ude05\n\nthe last dish we ordered was the sour and spicy potatoes, which was super disappointing as well\u2026\ud83d\ude2e i personally am not a fan of the potatoes as it\u2019s way too sour to my likings. i personally do not like my food to be extremely sour, hence this is a pass for me \ud83d\ude15 however if you do like food that is quite sour, i would say that this dish would be perfect for u\ud83d\ude19\ud83d\ude19\ud83d\ude19. this is a 4/10 for me \ud83d\ude14\n\noverall it\u2019s not bad! i think if you like china food then go for it! tho it may be abit on the pricier side, i think u make ur money worth when you order the right dishes!! \ud83d\ude1a\ud83d\ude1a\ud83d\ude1a"}, {"timestamp": 1724848411000, "date": "2024-08-28 20:33:31+08:00", "id": "marker_9", "caption": "\ud83d\udccddian xiao er\n\nwhat we ordered:\n\ud835\udc1a\ud835\udc27\ud835\udc20\ud835\udc1e\ud835\udc25\ud835\udc22\ud835\udc1c\ud835\udc1a \ud835\udc21\ud835\udc1e\ud835\udc2b\ud835\udc1b \ud835\udc2b\ud835\udc28\ud835\udc1a\ud835\udc2c\ud835\udc2d \ud835\udc1d\ud835\udc2e\ud835\udc1c\ud835\udc24 \n\ud835\udc1d\ud835\udc1e\ud835\udc1e\ud835\udc29 \ud835\udc1f\ud835\udc2b\ud835\udc22\ud835\udc1e\ud835\udc1d \ud835\udc2c\ud835\udc29\ud835\udc22\ud835\udc1c\ud835\udc32 \ud835\udc1d\ud835\udc22\ud835\udc1c\ud835\udc1e\ud835\udc1d \ud835\udc1c\ud835\udc21\ud835\udc22\ud835\udc1c\ud835\udc24\ud835\udc1e\ud835\udc27 (\ud835\udc25\ud835\udc1a \ud835\udc33\ud835\udc22 \ud835\udc23\ud835\udc22)\n\ud835\udc2c\ud835\udc1a\ud835\udc26\ud835\udc1b\ud835\udc1a\ud835\udc25 \ud835\udc24\ud835\udc1a\ud835\udc27\ud835\udc20 \ud835\udc24\ud835\udc28\ud835\udc27\ud835\udc20\n\ud835\udc2c\ud835\udc22\ud835\udc20\ud835\udc27\ud835\udc1a\ud835\udc2d\ud835\udc2e\ud835\udc2b\ud835\udc1e \ud835\udc30\ud835\udc21\ud835\udc1e\ud835\udc1a\ud835\udc2d\ud835\udc20\ud835\udc2b\ud835\udc1a\ud835\udc2c\ud835\udc2c \ud835\udc2d\ud835\udc28\ud835\udc1f\ud835\udc2e \ud835\udc30\ud835\udc22\ud835\udc2d\ud835\udc21 \ud835\udc2c\ud835\udc1e\ud835\udc1a\ud835\udc1f\ud835\udc28\ud835\udc28\ud835\udc1d\n\none might think we were starving with the amt of food we ordered for 3. the duck was v tender n the sauce was \ud83d\udc4d\ud83d\udc4d\ud83d\udc4d the other dishes also v nice\u2026 n the portion was honestly q big (we finished everyth tho ahah)\n\nhonestly not cheap but they hv discounts and vouchers u can use if u sign up as a member! \n\noverall: 8/10"}, {"timestamp": 1725271883000, "date": "2024-09-02 18:11:23+08:00", "id": "marker_10", "caption": "\ud83d\udccd\ud83c\uddef\ud83c\uddf5\n\nfood dump!! (pt 1) everything that i had in japan! \n\njapanese food is so yumz i can literally eat all these everyday\u2026\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d special shoutout to family mart and lawson chicken for being so good i ate it at least 2 times everyday\u2026. (family mart>lawson>7-11)\n\nand a random izakaya shop that we passed by in the middle of gunma which offered super delicious food(pics 1-5). their tap beer was super duper good as well! i asked the staff what beer it was and it was premium kirin lager so do try it out if yall r in japan\ud83d\ude0b\ud83d\ude0b\ud83d\ude0b other beers that i wld recommend include the famous asahi super dry beer and the suntory premium malts beer. those tasted super good as well and i would definitely prefer that over the\nones we have in sg, so try it!!! \ud83c\udf7b\ud83c\udf7b\ud83c\udf7b\n\npsa: for all the beer lovers out there, do rmbr to get tap beer when yall head into japanese restaurants as their beer tastes 10 times better than the cans ones!! \n\nofc ichiran ramen is another one of my all time favourites. it\u2019s a must for me to get the whole set(extra chashu, egg, seaweed and drink) alongside with the extra noodles whenever i come to japan. and if you scroll to pic 18, u can see my bowl is completely empty cos i ate it all up. tho it may be on the pricier side(lowkey tourist trap\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d), it is definitely an experience to get it when you come here!! \ud83d\ude1c\n\nwhen coming to tokyo, rmbr to head to asakusa temple,  where the streeets are filled with super good food as well!! (pics 19 and 20) got the chocolate mochi and oh my god. this was insane!! u must get it when you come here\ud83d\ude2e\u200d\ud83d\udca8 not too sweet, and the chocolate goes so well together with the strawberry. let me repeat, u must eat!! the taiyakis were alright as well, wouldn\u2019t say too special, but would be nice to try it since you are there\ud83d\ude1d \n\n#food #foodie #foodporn #ilovefood #ilovejapanesefood #foodiesg #singaporefoodie #izakaya #foodisgood #japan #japantrip #japanfood #foodphotography #foodstagram #foodgasm #sgfoodreview"}, {"timestamp": 1726306529000, "date": "2024-09-14 17:35:29+08:00", "id": "marker_11", "caption": "\ud83d\udccd\ud83c\uddef\ud83c\uddf5 the park cafe @lake yamanaka area beside mt fuji!!\n\npt 2 of everything i had in japan!! (fuji edition\ud83d\ude0e\ud83d\ude0e)\n\nsaw this place on my lemon8 and tiktok, so had no choice but to head down and give it a try. this place did not disappoint!!! \ud83d\ude0b \n\nwe ordered their signature pancake(pic 1 and 2) and tiramisu pancake(pic 3 and 4). omg they were so fluffy and soft this is legit the first time i come across pancakes with such texture. the tiramisu pancakes also came with a coffee dip. when dipped inside, you can taste the well mixed flavours of the coffee and tiramisu. super good!! i would easily rate the pancakes here an 8/10.  for the price of only 1180yen for their original pancakes(around 11-12sgd~), it\u2019s better than any of the pancakes i had in sg!! \n\nnext up we ordered their hot chocolate and i was wowed by it!! the chocolate was super gao(thick) and not too sweet. just nice for my taste buds\ud83d\ude01. i recommend getting this when the weather is super chilly (the day we went it was 20-21degrees) and i promise u confirm drink until shiokkkkk. \n\nthis place is a must visit when you are coming to japan and mt fuji area!! the highlight of this cafe is that they have outdoor seats(where i\u2019m sitting) that provide you with panoramic views of mount fuji and lake yamanaka. unfortunately when we arrived to this cafe, the clouds were blocking mt fuji so we couldn\u2019t see it\u2026\ud83d\ude2d but nonetheless this place is still super vibes!! fun fact if you come during the winter at around 830am or 4pm, there\u2019s a chance you get to see swans in the lake right in front of u \ud83d\ude31\ud83d\ude31\ud83d\ude31 do drop by when you are visiting mount fuji!! \ud83e\udd29\n\n#food #foodporn #foodstagram #sgfood #japan #japanesefood #mountfuji #lakeyamanaka #goodfood #ilovefood #pancakes #pancakelover #bussin #singapore #singaporefood #instagood #foodie"}, {"timestamp": 1726396685000, "date": "2024-09-15 18:38:05+08:00", "id": "marker_12", "caption": "\ud83d\udccd\ud83c\uddef\ud83c\uddf5 lake bake cafe @mtfuji!! \n\nlocated near mt fuji (lake kawaguchiko area), this place is a must for every pastry lover out there!! \ud83e\udd29\ud83e\udd29 there\u2019s a wide selection of bread here, and i can guarantee u that almost everything is good (because we got almost everything there is \ud83d\ude02\ud83d\ude02\ud83d\ude02) the bread here is super fresh and soft, and it\u2019s even better to have it on site, where they will help you heat the bread up \ud83c\udd99. special shoutout to the u shaped bread in pic 3(forgot what it is) for being extra good \ud83d\ude01. \n\nthis place is also super vibes as well! there are seats outside of the cafe that allow you to enjoy ur bread with the mighty mount fuji in front of you. \ud83d\uddfb please come here if you are ever visiting mt fuji!! will rate this place a 8/10. \n\n#food #foodporn #foodstagram #ilovefood #travel #japan #japantrip #japanfood #singapore #singaporefood #sg #sgfood #sgfoodie #foodie #foodphotography #japanesefood #foodisgood #tasty #pastry #bread"}, {"timestamp": 1726483613000, "date": "2024-09-16 18:46:53+08:00", "id": "marker_13", "caption": "\ud83d\udccdcommon grill by collin\u2019s (marsiling coffeeshop) \n\neasily one of the best western food i\u2019ve ever had!! and it\u2019s in a coffeeshop!!!\n\nstumbled across this when i was walking around looking for food in marsiling, and gawd damn this western food is life changing \ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8. we ordered their chicken cutlet with pasta, their carbonara, and their crispy onion rings.  the chicken cutlet was legit super crispy and the pasta was cooked to perfection. easily already a 7/10. the highlight of this dish however would be the tartar sauce. i expected the tartar sauce to taste like mcd fillet o fish sauce(i hate that), but omg the sauce was legit so so delicious. it had a similar taste to wingstop ranch, but it\u2019s texture is not as thick. when paired with the chicken, it easily brings this dish up to a 9/10!! \ud83e\udee8\ud83e\udee8\ud83e\udee8 \n\nthe carbonara was also crazy. the rich, creamy sauce and the al dente pasta paired with the super flavourful bacon \ud83e\udd53\u2026 this dish is definitely on another level!!! i am not a carbonara fan but i can vouch that you must have this when you come here!! it\u2019s hard to explain through words\u2026 so come and try it for urselves \ud83e\udee2\ud83e\udee2\ud83e\udee2. for the price of only 9.90$, u can\u2019t get any better carbonara out there!! \n\nonion rings were also super crispy as well. came with fries, but nothing really special about it. just ur standard sides i guess \ud83d\ude02\ud83d\ude02.\n\noverall, i would give this place a 7.5/10 and i will definitely come back again!! especially since it\u2019s located in a coffeeshop and that it\u2019s cheaper than other western food u can find in shopping malls. for its quality, this is definitely better than any western food u can find in coffee shops. this is a hidden gem \ud83d\udc8e for me. do try it if you are in the area and i promise u won\u2019t regret \ud83d\ude0b\ud83d\ude0b\ud83d\ude0b\n\n#food #foodporn #foodphotography #foodstagram #singapore #sg #sgfood #sgfoodie #goodfood #westernfood #ilovefood #foodie #sgeats #sgfoodlover #singaporefood"}, {"timestamp": 1726829870000, "date": "2024-09-20 18:57:50+08:00", "id": "marker_14", "caption": "\ud83d\udccdlittle glass stand\n\nlocated right smack in the middle of cbd(2 mins walk from raffles place mrt), this place offers a wide variety of matcha! we got the tenerai matcha latte and the wakaba matcha latte. \n\nthe tenerai matcha latte was a 6/10 for me. tho i can taste the authenticity of the matcha, it was not anything too special for me. it was said to be light and refreshing as well, but i felt that the wakaba matcha latte was more refreshing instead\ud83d\ude02\ud83d\ude02. for the price of 8.90$, i feel that it did not live up to its price point \ud83d\ude13\n\nthe wakaba matcha latte was a 7/10 for me. it felt super refreshing when drinking, followed by a strong matcha aftertaste which i prefer more over the other one. i would say that the wakaba is a better option if you are planning to head down here!!\n\noverall, as a matcha lover, i would say that the quality of matcha here is decent, but for the price im paying, i wouldn\u2019t say it\u2019s exactly worth it. (maybe when im employed then it\u2019s different). my go to will still be hvala hahaha! anyways come down and give it a try if you are around the area!! \n\n#food #foodporn #foodie #singapore #sg #sgfood #drinks #drink #cafe #latte #matcha #matchalatte #matchalover #cafehopping #singaporelife #foodgasm #drinkcoffee #drinktea #coffeelovers"}, {"timestamp": 1727187123000, "date": "2024-09-24 22:12:03+08:00", "id": "marker_15", "caption": "\ud83d\udccdkeens bagelry ( @keensbagelry )\n\nfriend of mine brought me down to try this place and i can easily say that no other store in sg has bagels better than here!!\ud83d\ude0b\ud83d\ude0b\ud83d\ude0bthis is a completely honest review.\n\nnostalgia: 8.9/10!! i loved everything about this... the crispy golden brown hashbrowns paired with the lettuce and the luncheon meat \ud83e\udee8\ud83e\udee8\ud83e\udee8 together with the sunny side up and cheddar cheese\ud83e\uddc0\ud83d\ude0d\ud83e\udd29 it was the perfect\nmix!!\n\nloxu: 9/10!!!!! if you love salmon and cream cheese you must get this!! they were super generous with the salmon, and the smoked salmon was super fresh and balanced, without an overpowering fish smell. the best part about this is the ratio of the cream cheese to salmon. the cream cheese is not too strong, so even for people who are not a big fan of cream cheese(eg me), you can still enjoy the whole masterpiece without it feeling jelat or oily. the onions and the tomatoes also brought extra flavour. u have to try this!!! \ud83d\ude07\ud83d\ude07\ud83d\ude07\n\nof course you cannot forget the bagels themselves!! the bagels here are really super good. super crunchy exterior with a soft, dense and slightly sweet interior. \ud83d\ude1athere are\n3 bagel types to choose from as well!! we got the plain one and i can already say that it\u2019s alrdy super delicious. will definitely come down again to try the sesame one!!\n\nlocated in the cbd area, with their big ass bagels priced at only 13-16$, i would say that this is a steal!! i promise you that the bagels are bigger than what it looks like in pictures and that it\u2019s definitely worth ur money!! \ud83e\udd17\ud83e\udd17\ud83e\udd17come down and try!!! \ud83d\ude1d\ud83d\ude1d\ud83d\ude1d\n\n#sg #sgfood #bagel #bagels #cafe #cafeteria #food #foodporn #foodphotography #foodstagram #foodblogger #goodfood #ilovefood #instagram #foodie #singapore #singaporefoodie #foodislife"}, {"timestamp": 1727604602000, "date": "2024-09-29 18:10:02+08:00", "id": "marker_16", "caption": "\ud83d\udccddai tao lala pot @ mount austin jb!!\n\nhave been wanting to try this for the longest time and i can say this definitely did not disappoint \ud83e\udee8\ud83e\udee8\ud83e\udee8\n\nwe ordered their daitao signature soup and omg!! the soup was super sweet and super delicious. it definitely exceeded my expectations\ud83d\ude0b\ud83d\ude0b\ud83d\ude0b. the flavour of the soup was really on point, not too bland or salty!! you can add the wine (\u82b1\u96d5\u9152) into the soup which makes the soup way more flavourful. add in abit of garlic and chilli padi and the soup is perfect \ud83e\udd17\ud83e\udd17. the soup is easily 9/10!! must get this when you come.  and of course not forgetting the clams! there\u2019s arnd 1kg worth of lala inside, which i feel is just nice for 2-3 people.\n\nfor the ingredients, we ordered their pork shoulder slice, marbled pork slice, chicken slice, signature fish paste and some vegetables. all the meat were super fresh and portions were big as well compared to sg\ud83d\ude02 \n\noverall, i feel this place is a must try! it\u2019s cheap compared to the ones we have in singapore. (spent around 150rm for 2, so roughly 25$ sgd per person) however, the downside will be that there may be long queues during dinner hours and weekends, so make sure to come early to avoid the queue!! it also opens till 3am, so it can be a good supper spot if you\u2019re planning to go jb and have some good food\ud83d\ude0b\ud83d\ude0b\ud83d\ude0b can get quite hot sometimes when you are eating as ur outdoors, but no complains cos food is bussin \ud83e\udd23\ud83e\udd23\ud83e\udd23 i will definitely come back again!! overall 8/10. \n\n#food #foodporn #ilovefood #singapore #hotpot #sg #malaysiafood #singaporefood #foodie #jb #sgfood #daitaolalapot #foodgasm #foodpics #singaporefoodie"}, {"timestamp": 1728213354000, "date": "2024-10-06 19:15:54+08:00", "id": "marker_17", "caption": "\ud83d\udccdbhc chicken ( @bhc_chicken_sg ) at marina square!\n\nwanted to try this for the longest time already\u2026 and @nonsenseeaterr finally agreed to it \ud83e\udd73\ud83e\udd73\ud83e\udd73\n\nwe ordered their bburinkle half chicken(14.90$) and the red king half chicken(23.90$). the bburinkle chicken was super delicious and had lots of cheese and vegetable seasoning that made the chicken super flavorful. cheese seasoning was not too thicc, so won\u2019t feel jelat when eating it!! \ud83d\ude0b\ud83d\ude0b as a fried chicken lover, i will rate this an 8/10! will definitely order this if i come here again! \n\nthe red king chicken was surprisingly good as well(super underrated!!). it was spicy(not say too spicy), but also had a bit of sweetness as well! the garlic added also made the chicken way more yummy. for those who love spicy food, i would recommend getting this! (tho it may be slightly pricy\ud83d\ude05) this is an 8/10 for me as well! \ud83d\ude04\ud83d\ude04 \n\noverall, this place is worth a try!! the quality of the chicken was super duper good(chicken came hot and juicy \ud83d\ude1b\ud83d\ude1b\ud83d\ude1b) and it\u2019s no doubt better than most of the fried chicken we have in sg. definitely reminds me of the bhc chicken i had in korea\u2026 \ud83e\udd79  will come back again and try the other flavours and dishes as well.\ud83d\ude00\ud83d\ude00\n\n#food #foodporn #foodphotography #foodstagram #foodblogger #chicken #chickenwings #friedchicken #instagood #ilovefood #foodie #sg #sgfood #sgfoodie #bhcchicken #sgeats"}, {"timestamp": 1728636316000, "date": "2024-10-11 16:45:16+08:00", "id": "marker_18", "caption": "\ud83d\udccdxiao long kan hotpot @ orchard!\n\nwanted something different from the basic haidilao, so tried this hotpot instead!\n\nwe ordered their mala soup, tomato soup and pork bone soup. their mala soup was super duper spicy but quite good actually!(resembles more of china type of hotpot where the soup is super oily.) remember to get \u5c0f\u8fa3if u can\u2019t take spice\ud83d\ude2d\ud83d\udd25. the pork bone soup was quite flavorful as well, and had a ton of ingredients. as for their tomato soup, it was alright and nothing special(still prefer my haidilao\ud83d\ude02\ud83d\ude02)\n\nas for the ingredients, we ordered their beef, pork and some veg. the beef (slide 3) and the pork(slide 4-6) were both super good! the meat was super tender and fresh, and the marbling of the meat \ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8 quality of the meat felt very premium as well!! (tho we paid a lot for it\u2026\ud83d\ude22)\n\noverall i would say that this place is quite expensive(paid 276$ for 6 people\u2026) and not worth coming\ud83e\udd72 . there was nothing very special about this hotpot place and we did not feel full after the meal as we only ordered a few plates of meat. not the best hotpot experience hahaha ig i will just stick to my usual haidilao or beauty in the pot.\n\n#food #foodie #foodporn #foodphotography #foodstagram #foodblogger #sg #sgfood #sgfoodie #ilovefood #singapore #singaporefood #hotpot #china #chinatown #xiaolongkan #soup"}, {"timestamp": 1729847797000, "date": "2024-10-25 17:16:37+08:00", "id": "marker_19", "caption": "\ud83d\udccddllm lok lok \n\ntried their loklok for the first time and i can say this is the best loklok i\u2019ve tried in sg!!(better than the dacheng sg outlet )\ud83d\ude0b\ud83d\ude0b\n\nordered a few different items but what stood out to me was their broccoli! as someone who dislikes broccoli\ud83d\ude24, gawddamn it was bussin haha. super crispy and when added together with their seasoning, it def hits the right spots \ud83d\udd25\ud83d\udd25\ud83d\udd25\n\ntheir pork belly with enoki mushrooms are worth mentioning as well. deep fried enoki mushrooms give a super crunchy texture when u bite down on it, with their juicy pork belly \ud83d\ude2e\u200d\ud83d\udca8\ud83d\ude2e\u200d\ud83d\udca8. definitely a must get!!\n\nand they also offer maggi mee with egg at 2.50$ only! though it\u2019s just maggi mee, it was super vibes and it came well together when eating loklok. highly recommend the curry flavour one especially \ud83d\udc4d\ud83d\udc4d\ud83d\udc4d\n\noverall i wld rate this an 8/10! a super good dinner/supper spot that opens till 4am. their loklok is also super duper cheap at only 1$ per stick! and ofc their hilarious nsfw designs (pic6 onwards) do give this place a try!! \ud83d\ude01\ud83d\ude01\ud83d\ude01\n\n#food #foodphotography #foodporn #foodstagram #foodblogger #loklok #singapore #singaporefood #sg #sgfood #sgfoodie #sgfoodies #sgeats #ilovefood #supper #dinner #goodfood"}, {"timestamp": 1732537586000, "date": "2024-11-25 20:26:26+08:00", "id": "marker_20", "caption": "\ud83d\udccdramen bari-uma (273 thomson road)\n\ncame across this on tiktok saying this is the richest tonkotsu ramen in sg\u2026 so obviously bro had to go down and try it \ud83d\ude1b\ud83d\ude1b\ud83d\ude1b \n\nwe ordered the ajitama-uma($15.90) and karatama-uma($17.90), with a plate of chashu($10.90), edamame($4.00) and their pan fried gyoza($7.90). \n\nthe ramen broth was super duper thicc and the noodles were super tangy as well!! the taste was super balanced,not too salty yet still tasty. \ud83d\ude0b\ud83d\ude0b\ud83d\ude0b the chashu was also frickin tender \ud83e\udd29\ud83e\udd29, probably one of the best, if not the best chashu i\u2019ve eaten in a ramen ngl. the egg was also super runny, loved the consistency of it and how it\u2019s cooked to perfection \ud83d\ude0d\ud83d\ude0d\ud83d\ude0d. if you are looking for something spicy, then definitely get the spicy one. super flavorful\ud83d\ude19\ud83d\ude19\ud83d\ude19. don\u2019t believe me? see pic 8 for evidence \ud83d\ude0e\n\ntheir pan-fried gyozas are also a must get when ur there!! the amazing chaoda and crispy layer at the bottom makes the gyoza 1000000x better. promise its good!!! \ud83d\udc4d not to forget their edamame also rocks.(not sure why, my mom said it\u2019s nice so i will just add it here lol)\n\noverall, would give this place an 8/10!! the store was super vibes and reminded me a lil bit of japan \ud83d\ude02 def one of the better bowls of ramen you can have in sg, tho it may be a lil pricey for the location(that\u2019s the price u have to pay for good food ig\ud83d\ude02\ud83d\ude02) i will def be back here again to have more ramen haha. come down and try it for urselves \ud83d\udc4d\ud83d\udc4d\ud83d\udc4d\n\n#food #goodfood #dinner #supper #ilovefood #instagram #foodporn #foodie #foodstagram #foodblogger #ramen #iloveramen\ud83c\udf5c #singapore #sg #sgfood #sgfoodie #sgfoodies #sgeats #instafood #foodies"}, {"timestamp": 1745311243000, "date": "2025-04-22 16:40:43+08:00", "id": "marker_21", "caption": "\ud83d\udccdtiantai hotpot (shanyuzhong)\n\nlocated at the rooftop of people park complex, this restaurant serves authentic chongqing hotpot!the space also matches the vibe of chongqing as well!(hearsay the owner of this restaurant was from chongqing as well\ud83d\ude0f) \n\nthe star of the show is definitely the mala soup base! super thick and rich in flavour, and mad spicy as well(they have options till weiweila for those who can\u2019t take spice!) \n\ntheir dishes are super affordable as well \ud83d\ude0cone plate of meat costs roughly 9$! meat was super fresh as well, especially their beef (pic3). super tender and flavourful!!\ud83d\ude00\ud83d\ude00\nthe veg also quite cheap, with their  potato slices at 1$ and enoki mushrooms at only 4$! \ud83e\udd2f\ud83e\udd2f\ud83e\udd2f \n\nlastly, their brown sugar jelly is a must get when you head down to this restaurant! at only 1$, this bowl of brown sugar jelly with raisins inside is the perfect desert after a hot and spicy meal of hotpot! def a must try!! \ud83d\udd25\ud83d\udd25\ud83d\udd25\n\noverall would give this place a 8.5/10! super affordable for a place located in town, def a good and affordable alternative! \n\n#singapore #singaporefood #food #foodie #ilovefood #foodporn #instagood #sgfood #sgfoodie #dinner #hotpot #hotpot\ud83c\udf72"}, {"timestamp": 1745904791000, "date": "2025-04-29 13:33:11+08:00", "id": "marker_22", "caption": "\ud83d\udccdroland zichar restaurant\n\nlocated in the east side of singapore, this seafood zichar restaurant is known especially for its chili crab!! (it\u2019s said that this restaurant is the birthplace of chili crab itself, so\u2026 u can expect super good chili crab here \ud83d\ude0f\ud83d\ude0f)\n\ntheir chili crab is definitely the best dish here. the crab was fresh, meat was tender, and sauce was super rich in flavour. \ud83d\ude31\ud83d\ude31\ud83d\ude31it had the right amount of spice in it and the egg in the sauce gave it a silky and creamy texture. \ud83d\ude06\ud83d\ude06\ud83d\ude06 definitely a dish worth ordering when you are here!!\n\ntheir other seafood dishes(black sauce prawns on slide 4 and their sea bass on slide 10) were amazing as well! black sauce had a savoury sweet bland, where they combined soy sauce together with other aromatics to create this layer of glaze that clings to each prawn!! prawns used were big too! \ud83d\udc4d\ud83d\udc4d loved their fish as well, the soup wasn\u2019t too strong nor too bland. fish was cooked to perfection \ud83d\ude01\n\noverall, this place definitely serves super good and high quality zichar with reasonable and large portions, though it may def be on the pricier side.(got the special birthday menu that day!) do come down and give it a try, especially their chili crab!! rlly think this is one of the best chilli crabs ive eaten hahahahaha\n\n#food #foodgasm #seafood #seafoodlovers #singapore #singaporefood #sgfood #instagram #insta #goodfood #ilovefood #hiddengem #restaurant #chilicrab #zichar #foodies #foodie"}, {"timestamp": 1746949801000, "date": "2025-05-11 15:50:01+08:00", "id": "marker_23", "caption": "\ud83d\udccdfounders bak kut teh \n\ndef one of the best bak kut teh restaurants in singapore!! \n\nordered their \u201cfounder popularity bak kut teh\u201d(slide 2) and and their \u201cfounder bak kut teh\u201d (slide 4) and safe to say their meat is super duper tender!! \ud83d\ude0b\ud83d\ude0b\ud83d\ude0bthe meat was also super fresh and did not have any foul smell to it. quality of the meat is definitely there, way better than the average bak kut teh chains u can find in shopping malls. \ud83e\udd23\n\nreally love their soup as well, super rich in flavour. one thing that stands out for the soup will be the peppery taste it has, def makes the soup a lil bit more spicy, but it also makes it way more flavourful. the long-simmered pork ribs infuse the soup with a deep umami taste, balanced by the warm sweetness of the garlic. def must come here if you\u2019re looking for good bkt!! \ud83d\ude0f\ud83d\ude01\n\ntheir side dishes, such as the salted veg and youtiao were pretty good as well! tho the youtiao didn\u2019t have anything special to it, the salted vegs packs a garlicky flavour, with the right amount of saltiness. worth ordering!! \ud83e\udd70\ud83e\udd70\ud83e\udd70\n\noverall, founders bak kut teh offers a very traditional and authentic dining experience. i would say it\u2019s worth travelling down and enjoy a good bowl of bak kut teh, so come down for urselves and try it!! \ud83d\ude00\ud83d\ude00\ud83d\ude00\n\n#singapore #food #foodporn #foodphotography #foodstagram #sg #sgfood #sgfoodie #goodfood #chinesefood #ilovefood #foodie #sgeats #sgfoodlover #singaporefood #chinesefoodlover #tourism"}];
+        
+        const startSlider = document.getElementById('start-slider');
+        const endSlider = document.getElementById('end-slider');
+        const startDateValue = document.getElementById('start-date-value');
+        const endDateValue = document.getElementById('end-date-value');
+        const keywordSearch = document.getElementById('keyword-search');
+        const stats = document.getElementById('stats');
+        
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        
+        function updateMarkers() {
+            const startTime = parseInt(startSlider.value);
+            const endTime = parseInt(endSlider.value);
+            const keyword = keywordSearch.value.toLowerCase().trim();
+            
+            // Ensure start is always before end
+            if (startTime > endTime) {
+                startSlider.value = endTime;
+                return;
+            }
+            
+            startDateValue.textContent = formatDate(startTime);
+            endDateValue.textContent = formatDate(endTime);
+            
+            let visibleCount = 0;
+            
+            // Get all leaflet panes that contain markers
+            const markerPane = document.querySelector('.leaflet-marker-pane');
+            if (!markerPane) {
+                console.error('Marker pane not found');
+                return;
+            }
+            
+            const allMarkers = Array.from(markerPane.children);
+            console.log('Total markers found:', allMarkers.length);
+            
+            markersData.forEach((data, index) => {
+                if (allMarkers[index]) {
+                    // Check time range
+                    const inTimeRange = data.timestamp >= startTime && data.timestamp <= endTime;
+                    
+                    // Check keyword match (if keyword is provided)
+                    const matchesKeyword = !keyword || data.caption.includes(keyword);
+                    
+                    if (inTimeRange && matchesKeyword) {
+                        allMarkers[index].style.display = '';
+                        visibleCount++;
+                    } else {
+                        allMarkers[index].style.display = 'none';
+                    }
+                }
+            });
+            
+            stats.textContent = `Showing ${visibleCount} of ${markersData.length} posts`;
+        }
+        
+        startSlider.addEventListener('input', updateMarkers);
+        endSlider.addEventListener('input', updateMarkers);
+        keywordSearch.addEventListener('input', updateMarkers);
+        
+        // Wait for map to fully load
+        setTimeout(() => {
+            updateMarkers();
+        }, 500);
+    </script>
+    </body>
+<script>
+    
+    
+            var map_715e4c0207ede0537cb6fb5a14d6e394 = L.map(
+                "map_715e4c0207ede0537cb6fb5a14d6e394",
+                {
+                    center: [24.72931664922963, 84.61777529509172],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4a9968dc0b60800e97232de6f35b23a6 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4a9968dc0b60800e97232de6f35b23a6.addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var marker_1_81096fcef0c0a31b2825949e5765e618 = L.marker(
+                [13.96605396270752, 100.43701171875],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_1a1d6f734f17bb8d9a6d872b8c42fe5b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_efab4c1feb1ddf2ff3273b43a4f79eb9 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_f27af618d994864cb122a68af49da9dc = $(`<div id="html_f27af618d994864cb122a68af49da9dc" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #1</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-14 00:11:15+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍the flair @shanghai&lt;br&gt;&lt;br&gt;saw this viral place on tiktok, so had to gave it a try! &lt;br&gt;&lt;br&gt;we ordered their fries, mee goreng and satay. fries were quite good, came with a special sauce that tasted weirdly good. 😊 their mee goreng was quite flavourful as well. could definitely taste the wok hey flavour, and it came with lots of LIAO too. would recommend this if you come here. the satay however was normal tho. did not taste wonderful, and the portion was rather small for the price you are paying for. 😔 &lt;br&gt;&lt;br&gt;overall, I would give this place a 7/10! it’s more on the pricier side, but I will definitely recommend to come down to this bar as they provide you with super great views from the 57th floor of the ritz Carlton hotel.  you can definitely enjoy ur cocktails and food with a stunning scenery of the city skyline! 😊😊😊&lt;br&gt;&lt;br&gt;#food #sgfood #ilovefood #singapore #singaporefood #cafefood #bar #barfood #theflairshanghai #ritzcarlton</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 13.96605396270752, 100.43701171875</p>                     <a href="https://www.instagram.com/p/C-ncfdzPDRu/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_efab4c1feb1ddf2ff3273b43a4f79eb9.setContent(html_f27af618d994864cb122a68af49da9dc);
+            
+        
+
+        marker_1_81096fcef0c0a31b2825949e5765e618.bindPopup(popup_efab4c1feb1ddf2ff3273b43a4f79eb9)
+        ;
+
+        
+    
+    
+            marker_1_81096fcef0c0a31b2825949e5765e618.bindTooltip(
+                `<div>
+                     📸 Post #1 - 2024-08-14 00:11:15+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1_81096fcef0c0a31b2825949e5765e618.setIcon(icon_1a1d6f734f17bb8d9a6d872b8c42fe5b);
+            
+    
+            var marker_2_e8b7acb2cb461b3149b7371f5b204e7b = L.marker(
+                [22.36866569519043, 114.11333465576172],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_9056673279f39587e4cff8e019ebc4fc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_be8c9194410a81d7919cb73b29d2b6ae = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_ac1a924027dea3dd6f64f6209f9df9d6 = $(`<div id="html_ac1a924027dea3dd6f64f6209f9df9d6" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #2</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-14 13:22:38+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍莱莱小笼 @shanghai huangpu &lt;br&gt;&lt;br&gt;THIS IS A MUST TRY!!!!&lt;br&gt;&lt;br&gt;this place showed up on my 小红书all the time while doing my research for the trip, so I headed down to this place and it definitely DID NOT disappoint! &lt;br&gt;&lt;br&gt;we ordered their basic xlbs, their crab roe xlbs, and the pork cutlet. their basic xlbs were already amazing! the soup tasted super good and the skin was also very chewy. definitely better than the ones we have in sg. &lt;br&gt;&lt;br&gt;next up their pork cutlets were SUPER crispy as well! A golden-brown crunchy crust on the outside, with tender and a soft texture that’s easy to bite into. For the price of 15-20yuan, it was definitely worth getting. Would rate this a solid 9/10!&lt;br&gt;&lt;br&gt;last but not least, THE cream of the crop, the crab roe XLBs!!!! The XLBS were filled with rich, vibrant orange crab roe.  The best part of the xlbs was the mix of flavour between the crab roe and the pork fillings. This is easily a 10/10 for me! 😋😋😋 It was so good that we ordered 1 more portion of this 🤗🤗🤗 PLEASE GET THIS IF YOU COME HERE!!! &lt;br&gt;&lt;br&gt;#food #foodporn #singapore #singaporefood #singaporefoodie #musttry #shanghai #ilovefood #xiaolongbao #healthyfood #foodie #singaporelife</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 22.36866569519043, 114.11333465576172</p>                     <a href="https://www.instagram.com/p/C-o3Ds6vLan/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_be8c9194410a81d7919cb73b29d2b6ae.setContent(html_ac1a924027dea3dd6f64f6209f9df9d6);
+            
+        
+
+        marker_2_e8b7acb2cb461b3149b7371f5b204e7b.bindPopup(popup_be8c9194410a81d7919cb73b29d2b6ae)
+        ;
+
+        
+    
+    
+            marker_2_e8b7acb2cb461b3149b7371f5b204e7b.bindTooltip(
+                `<div>
+                     📸 Post #2 - 2024-08-14 13:22:38+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2_e8b7acb2cb461b3149b7371f5b204e7b.setIcon(icon_9056673279f39587e4cff8e019ebc4fc);
+            
+    
+            var marker_3_a76d47cbb6986f3ab9d7b08b27bd9f86 = L.marker(
+                [39.80672073364258, 116.15406799316406],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_75abf67c97cf5d5ae8dc93a6cd60344a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_099fe7b753876b5aad18b3c3c02b196b = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_3e2c31e556a8dae853f56dbd25f55d9b = $(`<div id="html_3e2c31e556a8dae853f56dbd25f55d9b" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #3</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-15 17:33:21+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍沪西老弄堂面馆 @shanghai &lt;br&gt;&lt;br&gt; my friends recco this place when I’m coming shanghai, and even claimed that it’s the best noodles EVER at nanjing east… guess what THEY ARE RIGHT!!! 🔥🔥🔥&lt;br&gt;&lt;br&gt;we ordered their signature pork liver noodles, their spicy pork noodles and their pork cutlet. the pork cutlet was delicious! definitely on the crispier side and it’s a must get when coming to this store. as for their noodles, the noodles were cooked to perfection! not too soft nor hard, it was super “QQ” and makes it super easy to bite into. the noodles were SO good that i even asked for additional bowl of noodles and still devoured them all 😮‍💨😮‍💨😮‍💨 The pork liver and meat were also super good! Accompanied with the thick black sauce, this is easily a 10/10 for me! SUPER DELISH YUMZZZZ🤤🤤🤤🤤&lt;br&gt;&lt;br&gt;come down to this shop if you are nearby and I promise u will not regret! 🙏🙏🙏&lt;br&gt;&lt;br&gt;#food #shanghaifood #shanghaifoodie #singapore #singaporefood #singaporelife #ilovefood #foodporn #foodpornshare #china #chinafood</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 39.80672073364258, 116.15406799316406</p>                     <a href="https://www.instagram.com/p/C-r4i54yXYN/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_099fe7b753876b5aad18b3c3c02b196b.setContent(html_3e2c31e556a8dae853f56dbd25f55d9b);
+            
+        
+
+        marker_3_a76d47cbb6986f3ab9d7b08b27bd9f86.bindPopup(popup_099fe7b753876b5aad18b3c3c02b196b)
+        ;
+
+        
+    
+    
+            marker_3_a76d47cbb6986f3ab9d7b08b27bd9f86.bindTooltip(
+                `<div>
+                     📸 Post #3 - 2024-08-15 17:33:21+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3_a76d47cbb6986f3ab9d7b08b27bd9f86.setIcon(icon_75abf67c97cf5d5ae8dc93a6cd60344a);
+            
+    
+            var marker_4_c0bab0ec846d36e72f0739c58d63b228 = L.marker(
+                [34.98649978637695, 135.75917053222656],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_42c94e0b9d8f859ad410a554268062b0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_899feef50e1b56b033f1e65f2b7401a3 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_2353cbaef57e3d204a2ace0fd3fd4852 = $(`<div id="html_2353cbaef57e3d204a2ace0fd3fd4852" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #4</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-18 01:51:08+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Sen Sen sushi @jemsingapore &lt;br&gt;&lt;br&gt;shots were taken on my digicam!!(sony cybershot dsc-t series!!!)&lt;br&gt;&lt;br&gt;definitely on the pricier side compared to other sushi places… but quality was still up there! the fried squid and the sashimi rlly impressed me😋😋😋 the fried squid was super crispy, and the batter taste was not strong. the sashimi slices were super thick and fresh as well. for the price of only 4.80$, i will order it agn when i come back here. do give it a try when you are nearby!! 🤗🤗&lt;br&gt;&lt;br&gt;would give this a 6/10! still above average, but I would much rather stick to my usual sushiro dinners 😜😜&lt;br&gt;&lt;br&gt;#singapore #singaporefood #singaporefoodie #food #foodporn #sushi #sushilovers #ilovefood #sushiporn</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 34.98649978637695, 135.75917053222656</p>                     <a href="https://www.instagram.com/p/C-x7Gf3y5XY/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_899feef50e1b56b033f1e65f2b7401a3.setContent(html_2353cbaef57e3d204a2ace0fd3fd4852);
+            
+        
+
+        marker_4_c0bab0ec846d36e72f0739c58d63b228.bindPopup(popup_899feef50e1b56b033f1e65f2b7401a3)
+        ;
+
+        
+    
+    
+            marker_4_c0bab0ec846d36e72f0739c58d63b228.bindTooltip(
+                `<div>
+                     📸 Post #4 - 2024-08-18 01:51:08+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4_c0bab0ec846d36e72f0739c58d63b228.setIcon(icon_42c94e0b9d8f859ad410a554268062b0);
+            
+    
+            var marker_5_46fbd74d682db0937b8417fcbaa544d9 = L.marker(
+                [3.117845058441162, 101.67729187011719],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_379b57b5a02da558fabb0bb6fd500772 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4fe1ec46eeae49ee3284a52a2de391a1 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_7fb227a97c82856c3ff96873ec76e659 = $(`<div id="html_7fb227a97c82856c3ff96873ec76e659" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #5</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-19 21:50:36+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍hot hideout mala @ahothideout (semb)!&lt;br&gt;&lt;br&gt;one of the most famous and most classic malas out there!&lt;br&gt;&lt;br&gt;we ordered their signature mala collagen soup as well as their dry mala, with their scrambled eggs and their deep fried ingredients(potatoes, luncheon meat, and fish). what can I say? this tasted like HEAVENNNN😋😋😋 their mala collagen soup was super savoury and indulgent. the taste of the mala was not too overwhelming and it’s just nice for me! i can easily say that this is one of the best mala soups I’ve ever tried! as someone who was never a fan of mala tangs, this definitely converted me. come down and try it for urselves! would easily give this an 8/10.&lt;br&gt;&lt;br&gt;as for their mala, there’s nth really special as compared to other mala places you can find in Singapore, but what makes them stand out would be their deep fried ingredients and scrambled eggs. the deep fried potatoes were especially crispy till the point where you can hear the KRAK KRAK sounds when you bite down on it!! THIS IS A MUST GET WHEN GOING HHO!! their deep fried luncheon meat and their deep fried fish also goes well with mala. the fried luncheon meat was full of flavour and their deep fried fish was soft and tasty. do rmbr to get bigger slices for the fish because when they deep fry it, the pieces get smaller!!! 🤔🤔🤔 &lt;br&gt;&lt;br&gt;I did not really understand the idea of scrambled eggs with mala at first, but I was WOWED when I had my first mouth of their scrambled eggs alongside the mala tang! THE EGGS WERE SERVED AS DESCRIBED! IT WAS SOFT, FLUFFY AND HAD A CREAMY TEXTURE! its a must order for me regardless of whether I’m eating dry or soup. It will make the whole experience better!!! 😉😉😉&lt;br&gt;&lt;br&gt;what makes hho stand out from the other mala stores would be the fact that they offer deep fried options for these ingredients. I went to one of the thye guan mala outlets that day and they unfortunately could not deep fry it😂😂. WHAT R U WAITING FOR LADIES AND GENTLEMEN GO AND EAT HHO IF U HAVENT!!! 😊WE R IN 2024!!! &lt;br&gt;&lt;br&gt;#food #foodporn #singapore #singaporefood #singaporefoodie #ilovefood #iloveeating #eat #mala #ahothideout #ahothideoutsg</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 3.117845058441162, 101.67729187011719</p>                     <a href="https://www.instagram.com/p/C-2pKm9TcZ1/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_4fe1ec46eeae49ee3284a52a2de391a1.setContent(html_7fb227a97c82856c3ff96873ec76e659);
+            
+        
+
+        marker_5_46fbd74d682db0937b8417fcbaa544d9.bindPopup(popup_4fe1ec46eeae49ee3284a52a2de391a1)
+        ;
+
+        
+    
+    
+            marker_5_46fbd74d682db0937b8417fcbaa544d9.bindTooltip(
+                `<div>
+                     📸 Post #5 - 2024-08-19 21:50:36+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5_46fbd74d682db0937b8417fcbaa544d9.setIcon(icon_379b57b5a02da558fabb0bb6fd500772);
+            
+    
+            var marker_6_5fabeb7577802c018277b0cc8dcf427c = L.marker(
+                [-37.845184326171875, 144.99407958984375],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_947a3fdbe5b652c22258e8dc7d2ed08d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_33d175b90fad7c41483391548fceb315 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_be45ea2776f348abf385eea60912d243 = $(`<div id="html_be45ea2776f348abf385eea60912d243" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #6</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-21 21:40:24+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍publico&lt;br&gt;&lt;br&gt;what we ordered:&lt;br&gt;𝐩𝐫𝐨𝐬𝐜𝐢𝐮𝐭𝐭𝐨 𝐰𝐨𝐨𝐝𝐟𝐢𝐫𝐞𝐝 𝐩𝐢𝐳𝐳𝐚&lt;br&gt;v generous w the prosciutto! altho its a “thick” crust, it isnt too bready! but still v filling nonetheless&lt;br&gt;&lt;br&gt;𝐡𝐚𝐧𝐝𝐜𝐮𝐭 𝐩𝐚𝐩𝐩𝐚𝐫𝐝𝐞𝐥𝐥𝐞 𝐛𝐞𝐞𝐟 𝐫𝐚𝐠𝐮&lt;br&gt;A LOT of meat and i rly like the pasta texture….😚&lt;br&gt;&lt;br&gt;food is on the pricier end incl still water which is $11…ahem @injeffsbelly but the ambience is v nice!&lt;br&gt;&lt;br&gt;overall: 6.5/10</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 -37.845184326171875, 144.99407958984375</p>                     <a href="https://www.instagram.com/p/C-7xlmlSxDq/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_33d175b90fad7c41483391548fceb315.setContent(html_be45ea2776f348abf385eea60912d243);
+            
+        
+
+        marker_6_5fabeb7577802c018277b0cc8dcf427c.bindPopup(popup_33d175b90fad7c41483391548fceb315)
+        ;
+
+        
+    
+    
+            marker_6_5fabeb7577802c018277b0cc8dcf427c.bindTooltip(
+                `<div>
+                     📸 Post #6 - 2024-08-21 21:40:24+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6_5fabeb7577802c018277b0cc8dcf427c.setIcon(icon_947a3fdbe5b652c22258e8dc7d2ed08d);
+            
+    
+            var marker_7_c0f527fc6315db5356a9a52a6d8dce2f = L.marker(
+                [35.62799835205078, 139.73516845703125],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_23e31eeee630c828753ffa222541a595 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0fe220a061f15d29cba7bf80eee142bf = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_ff8d992b9a1e1cf4676d3675041ac9b2 = $(`<div id="html_ff8d992b9a1e1cf4676d3675041ac9b2" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #7</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-23 17:16:10+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍brothers ramen @brosramen @ international plaza!!&lt;br&gt;&lt;br&gt;I CAN VOUCH ON MY LIFE THAT THIS IS THE BEST RAMEN IN THE WHOLE OF SINGAPORE!!! 😉😉😉&lt;br&gt;&lt;br&gt;As an ultimate ramen lover🤤, I can say that this ramen is 1000000000000000000000000000000000000000/10. &lt;br&gt;I came here over 10 times and this is the first time I got the megamen as I wanted a switch from my usual signature brothers ramen. What can I say. This bowl of noodles is the most perfect bowl of noodles you can find in SG. 😄 The broth is insanely thick and the flavour is super duper good. U know ur eating  REAL, LEGIT ramen when you eat at brothers ramen. I added spice cos I’m a spice lover and oh my god. It’s GOD tier. The nooodles also super QQ. I even added noodles and I absolutely destroyed the whole bowl(on my story). DO NOT CALL URSELF A RAMEN LOVER IF U NEVER EAT BROTHERS RAMEN. &lt;br&gt;&lt;br&gt;As for their signature brothers ramen, it has more soup and more like traditional ramen. (Slide 678). As you can clearly see, the egg alrdy looks bussin. The whole bowl is cooked to perfection. I always add noodles and finish the whole bowl. But I don’t care cos it’s BROTHERS RAMEN🔥🔥🔥. I think this would be more suitable to everyone as it’s less salty compared to the megamen, because the megamen has less soup. But again, you can adjust the saltiness level of ur ramen while ordering, so you have not excuses not to come here. 😉&lt;br&gt;&lt;br&gt;For the price of only 13.90 each for such a big bowl of megamen and brothers ramen, and the fact that it’s located RIGHT SMACK in the middle of cbd, there is really nth u can complain about. And this ramen store opens only from 11-2.45pm and 6-7.45pm, and yet their queues are insane. I rmbr having to queue over like 1 hour one time. But I don’t care because I love brothers ramen. And I love being a fatty Bom Bom. &lt;br&gt;And Ok, I’m gonna be honest, u already know it’s good when you see actual JAPANESE people queueing for this ramen shop. This is the ONLY shop in Singapore where I see Japanese ppl queueing for the food. So yall better come down and try. Don’t say BOJIO. LET ME SAY THIS AGAIN. BEST RAMEN IN SINGAPORE!!! 😋😋😋&lt;br&gt;&lt;br&gt;#singapore #ramen #singaporefood #food #ilovefood #foodporn #instagood</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 35.62799835205078, 139.73516845703125</p>                     <a href="https://www.instagram.com/p/C_Ac7_9SyR9/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_0fe220a061f15d29cba7bf80eee142bf.setContent(html_ff8d992b9a1e1cf4676d3675041ac9b2);
+            
+        
+
+        marker_7_c0f527fc6315db5356a9a52a6d8dce2f.bindPopup(popup_0fe220a061f15d29cba7bf80eee142bf)
+        ;
+
+        
+    
+    
+            marker_7_c0f527fc6315db5356a9a52a6d8dce2f.bindTooltip(
+                `<div>
+                     📸 Post #7 - 2024-08-23 17:16:10+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7_c0f527fc6315db5356a9a52a6d8dce2f.setIcon(icon_23e31eeee630c828753ffa222541a595);
+            
+    
+            var marker_8_95fbb105420a2d5ed31150fa56c57cf9 = L.marker(
+                [39.99620819091797, 116.47222900390625],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_1ff332a80c5f52f2a740e736db1a3af1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2323a1b3c469cc63c0888de1e67019d6 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_fff4ebc239c24072b3cebaf0cf654a06 = $(`<div id="html_fff4ebc239c24072b3cebaf0cf654a06" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #8</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-26 22:07:31+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Xiang Xiang hunan cuisine @causewaypointsg !!&lt;br&gt;&lt;br&gt;a good place to get China food to satisfy your cravings!!&lt;br&gt;&lt;br&gt;Ate here for the first time and ordered their signature stir fried pork, golden broth sour and spicy fish, their sour and spicy potatoes, and the dry pot pork intestines. &lt;br&gt;&lt;br&gt;Surprisingly, tho their dry pot pork intestines (pic 1 and 2) is not one of their signature dishes, I would recommend getting this when you come here!!! This was honestly super good 👍 The herbs together with the garlic made the whole dish smell fantastic. The dish fried together with the chili also makes it 10 times more flavorful. Easily an 8/10 for me!! 😋😋&lt;br&gt;&lt;br&gt;The hunan style stir fried pork (pics 3 and 4) is also another must order when you come here!! The wok hey was super strong, and the texture of the meat was soft and tender. Fried together with the sauce, and paired with rice, this dish is a BANGERRRRRR. Honestly the taste of their stir fried pork reminded me of the stir fried pork I ate recently in China😮‍💨 I would say this dish is an easy 8/10 as well. Please get this when you come here!!!🔥🔥🔥&lt;br&gt;&lt;br&gt;The golden broth sour and spicy fish (pics 5 and 6)was however,  unfortunately disappointing 😢😢😢. The broth did not taste sour and spicy at all for me, but rather just the super strong lemon taste. The broth was just filled with lemon, and tho there was peppercorn inside, I couldn’t taste any of it. Maybe it’s just me, but I personally am not a fan of this dish and wouldn’t order it again.😔 maybe it’s a me problem but idk. Yall can try it and let me know!! 🙂 so sorry but this is a 4/10 for me 😅&lt;br&gt;&lt;br&gt;The last dish we ordered was the sour and spicy potatoes, which was super disappointing as well…😮 I personally am not a fan of the potatoes as it’s way too sour to my likings. I personally do not like my food to be extremely sour, hence this is a pass for me 😕 however if you do like food that is quite sour, I would say that this dish would be perfect for u😙😙😙. This is a 4/10 for me 😔&lt;br&gt;&lt;br&gt;Overall it’s not bad! I think if you like China food then go for it! Tho it may be abit on the pricier side, I think u make ur money worth when you order the right dishes!! 😚😚😚</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 39.99620819091797, 116.47222900390625</p>                     <a href="https://www.instagram.com/p/C_IsqiHysVb/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_2323a1b3c469cc63c0888de1e67019d6.setContent(html_fff4ebc239c24072b3cebaf0cf654a06);
+            
+        
+
+        marker_8_95fbb105420a2d5ed31150fa56c57cf9.bindPopup(popup_2323a1b3c469cc63c0888de1e67019d6)
+        ;
+
+        
+    
+    
+            marker_8_95fbb105420a2d5ed31150fa56c57cf9.bindTooltip(
+                `<div>
+                     📸 Post #8 - 2024-08-26 22:07:31+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8_95fbb105420a2d5ed31150fa56c57cf9.setIcon(icon_1ff332a80c5f52f2a740e736db1a3af1);
+            
+    
+            var marker_9_7de4b177d393b58dab1331a7454f946f = L.marker(
+                [43.81483459472656, -79.33699798583984],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_be68d8102c9637ab787371bb5e822c1e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7b58904bb5149942fb961fcfe72e17af = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_6214d3592d7e7811d1ec27227d989585 = $(`<div id="html_6214d3592d7e7811d1ec27227d989585" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #9</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-08-28 20:33:31+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍dian xiao er&lt;br&gt;&lt;br&gt;what we ordered:&lt;br&gt;𝐚𝐧𝐠𝐞𝐥𝐢𝐜𝐚 𝐡𝐞𝐫𝐛 𝐫𝐨𝐚𝐬𝐭 𝐝𝐮𝐜𝐤 &lt;br&gt;𝐝𝐞𝐞𝐩 𝐟𝐫𝐢𝐞𝐝 𝐬𝐩𝐢𝐜𝐲 𝐝𝐢𝐜𝐞𝐝 𝐜𝐡𝐢𝐜𝐤𝐞𝐧 (𝐥𝐚 𝐳𝐢 𝐣𝐢)&lt;br&gt;𝐬𝐚𝐦𝐛𝐚𝐥 𝐤𝐚𝐧𝐠 𝐤𝐨𝐧𝐠&lt;br&gt;𝐬𝐢𝐠𝐧𝐚𝐭𝐮𝐫𝐞 𝐰𝐡𝐞𝐚𝐭𝐠𝐫𝐚𝐬𝐬 𝐭𝐨𝐟𝐮 𝐰𝐢𝐭𝐡 𝐬𝐞𝐚𝐟𝐨𝐨𝐝&lt;br&gt;&lt;br&gt;one might think we were starving with the amt of food we ordered for 3. the duck was v tender n the sauce was 👍👍👍 the other dishes also v nice… n the portion was honestly q big (we finished everyth tho AHAH)&lt;br&gt;&lt;br&gt;honestly not cheap but they hv discounts and vouchers u can use if u sign up as a member! &lt;br&gt;&lt;br&gt;overall: 8/10</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 43.81483459472656, -79.33699798583984</p>                     <a href="https://www.instagram.com/p/C_Nrf00yjP6/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_7b58904bb5149942fb961fcfe72e17af.setContent(html_6214d3592d7e7811d1ec27227d989585);
+            
+        
+
+        marker_9_7de4b177d393b58dab1331a7454f946f.bindPopup(popup_7b58904bb5149942fb961fcfe72e17af)
+        ;
+
+        
+    
+    
+            marker_9_7de4b177d393b58dab1331a7454f946f.bindTooltip(
+                `<div>
+                     📸 Post #9 - 2024-08-28 20:33:31+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9_7de4b177d393b58dab1331a7454f946f.setIcon(icon_be68d8102c9637ab787371bb5e822c1e);
+            
+    
+            var marker_10_7947642d054d48d7939f014d37954022 = L.marker(
+                [39.91997146606445, -86.22093963623047],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_2e71d9ccce2a1f53ac7ad86dba30e0a3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9348b1cefa2595ce1fe681ca60a88cdf = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_9060a9bd4cf5ead9552c1f14004838f0 = $(`<div id="html_9060a9bd4cf5ead9552c1f14004838f0" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #10</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-02 18:11:23+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍🇯🇵&lt;br&gt;&lt;br&gt;food dump!! (Pt 1) everything that I had in Japan! &lt;br&gt;&lt;br&gt;Japanese food is so yumz I can literally eat all these everyday…😭😭😭 special shoutout to family mart and lawson chicken for being so good I ate it at least 2 times everyday…. (Family mart&gt;lawson&gt;7-11)&lt;br&gt;&lt;br&gt;And a random izakaya shop that we passed by in the middle of gunma which offered super delicious food(pics 1-5). Their tap beer was super duper good as well! I asked the staff what beer it was and it was premium kirin lager so do try it out if yall r in japan😋😋😋 OTHER BEERS THAT I wld recommend include the famous asahi super dry beer and the Suntory premium malts beer. Those tasted super good as well and I would definitely prefer that over the&lt;br&gt;ones we have in sg, so TRY IT!!! 🍻🍻🍻&lt;br&gt;&lt;br&gt;PSA: for all the beer lovers out there, do rmbr to get tap beer when yall head into Japanese restaurants as their beer tastes 10 times better than the cans ones!! &lt;br&gt;&lt;br&gt;ofc ichiran ramen is another one of my all time favourites. it’s a must for me to get the whole set(extra chashu, egg, seaweed and drink) alongside with the extra noodles whenever I come to Japan. and if you scroll to pic 18, u can see my bowl is completely empty cos I ate it all up. tho it may be on the pricier side(lowkey tourist trap😭😭😭), it is definitely an experience to get it when you come here!! 😜&lt;br&gt;&lt;br&gt;when coming to Tokyo, rmbr to head to asakusa temple,  where the streeets are filled with super good food as well!! (Pics 19 and 20) got the chocolate mochi and oh my god. This was insane!! U MUST GET IT WHEN YOU COME HERE😮‍💨 not too sweet, and the chocolate goes so well together with the strawberry. let me repeat, u must eat!! the taiyakis were alright as well, wouldn’t say too special, but would be nice to try it since you are there😝 &lt;br&gt;&lt;br&gt;#food #foodie #foodporn #ilovefood #ilovejapanesefood #foodiesg #singaporefoodie #izakaya #foodisgood #japan #japantrip #japanfood #foodphotography #foodstagram #foodgasm #sgfoodreview</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 39.91997146606445, -86.22093963623047</p>                     <a href="https://www.instagram.com/p/C_aTNNpSGRP/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_9348b1cefa2595ce1fe681ca60a88cdf.setContent(html_9060a9bd4cf5ead9552c1f14004838f0);
+            
+        
+
+        marker_10_7947642d054d48d7939f014d37954022.bindPopup(popup_9348b1cefa2595ce1fe681ca60a88cdf)
+        ;
+
+        
+    
+    
+            marker_10_7947642d054d48d7939f014d37954022.bindTooltip(
+                `<div>
+                     📸 Post #10 - 2024-09-02 18:11:23+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10_7947642d054d48d7939f014d37954022.setIcon(icon_2e71d9ccce2a1f53ac7ad86dba30e0a3);
+            
+    
+            var marker_11_71e5214c2e92171bbe40da28d519c2e4 = L.marker(
+                [35.567142486572266, 135.1932830810547],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_e87324625636831649eea77a1714cb8f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0fe1882008da0e5d8589eeb54d62cdcb = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_4478a8221b752d9d3804504a79dd6f19 = $(`<div id="html_4478a8221b752d9d3804504a79dd6f19" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #11</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-14 17:35:29+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍🇯🇵 The PARK cafe @lake yamanaka area beside mt fuji!!&lt;br&gt;&lt;br&gt;Pt 2 of everything I had in Japan!! (FUJI edition😎😎)&lt;br&gt;&lt;br&gt;Saw this place on my lemon8 and TikTok, so had no choice but to head down and give it a try. This place did NOT disappoint!!! 😋 &lt;br&gt;&lt;br&gt;We ordered their signature pancake(pic 1 and 2) and tiramisu pancake(pic 3 and 4). OMG they were so fluffy and soft this is legit the first time I come across pancakes with such texture. The tiramisu pancakes also came with a coffee dip. When dipped inside, you can taste the well mixed flavours of the coffee and tiramisu. SUPER GOOD!! I would easily rate the pancakes here an 8/10.  For the price of only 1180yen for their original pancakes(around 11-12SGD~), it’s better than any of the pancakes I had in sg!! &lt;br&gt;&lt;br&gt;Next up we ordered their hot chocolate and I was WOWed by it!! The chocolate was super GAO(thick) and not too sweet. JUST NICE for my taste buds😁. I recommend getting this when the weather is super chilly (the day we went it was 20-21degrees) and I promise u confirm drink until SHIOKKKKK. &lt;br&gt;&lt;br&gt;This place is a must visit when you are coming to Japan and mt fuji area!! The highlight of this cafe is that they have outdoor seats(where I’m sitting) that provide you with panoramic views of Mount fuji and lake yamanaka. Unfortunately when we arrived to this cafe, the clouds were blocking MT Fuji so we couldn’t see it…😭 but nonetheless this place is still super vibes!! Fun fact if you come during the winter at around 830am or 4pm, there’s a chance you get to see swans in the lake right in front of u 😱😱😱 Do drop by when you are visiting Mount fuji!! 🤩&lt;br&gt;&lt;br&gt;#food #foodporn #foodstagram #sgfood #japan #japanesefood #mountfuji #lakeyamanaka #goodfood #ilovefood #pancakes #pancakelover #bussin #singapore #singaporefood #instagood #foodie</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 35.567142486572266, 135.1932830810547</p>                     <a href="https://www.instagram.com/p/C_5IozNSVqn/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_0fe1882008da0e5d8589eeb54d62cdcb.setContent(html_4478a8221b752d9d3804504a79dd6f19);
+            
+        
+
+        marker_11_71e5214c2e92171bbe40da28d519c2e4.bindPopup(popup_0fe1882008da0e5d8589eeb54d62cdcb)
+        ;
+
+        
+    
+    
+            marker_11_71e5214c2e92171bbe40da28d519c2e4.bindTooltip(
+                `<div>
+                     📸 Post #11 - 2024-09-14 17:35:29+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_11_71e5214c2e92171bbe40da28d519c2e4.setIcon(icon_e87324625636831649eea77a1714cb8f);
+            
+    
+            var marker_12_03c1dad2573c65a0416ff36a0b76dc8b = L.marker(
+                [34.762203216552734, 134.00607299804688],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_0e8f3aaeaeb0a4d1f9d5ae8494ccd405 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8923a9e0e920ceeda2b9a86a07224882 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_e2720990bdf8c779441bb82fbf04d745 = $(`<div id="html_e2720990bdf8c779441bb82fbf04d745" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #12</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-15 18:38:05+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍🇯🇵 lake bake cafe @mtfuji!! &lt;br&gt;&lt;br&gt;located near mt fuji (lake kawaguchiko area), this place is a must for every pastry lover out there!! 🤩🤩 there’s a wide selection of bread here, and I can guarantee u that almost everything is good (because we got almost everything there is 😂😂😂) The bread here is super fresh and soft, and it’s even better to have it on site, where they will help you heat the bread up 🆙. special shoutout to the U Shaped bread in pic 3(forgot what it is) for being extra good 😁. &lt;br&gt;&lt;br&gt;This place is also super vibes as well! There are seats outside of the cafe that allow you to enjoy ur bread with the mighty Mount fuji in front of you. 🗻 Please come here if you are ever visiting mt fuji!! Will rate this place a 8/10. &lt;br&gt;&lt;br&gt;#food #foodporn #foodstagram #ilovefood #travel #japan #japantrip #japanfood #singapore #singaporefood #sg #sgfood #sgfoodie #foodie #foodphotography #japanesefood #foodisgood #tasty #pastry #bread</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 34.762203216552734, 134.00607299804688</p>                     <a href="https://www.instagram.com/p/C_70mHYStkz/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_8923a9e0e920ceeda2b9a86a07224882.setContent(html_e2720990bdf8c779441bb82fbf04d745);
+            
+        
+
+        marker_12_03c1dad2573c65a0416ff36a0b76dc8b.bindPopup(popup_8923a9e0e920ceeda2b9a86a07224882)
+        ;
+
+        
+    
+    
+            marker_12_03c1dad2573c65a0416ff36a0b76dc8b.bindTooltip(
+                `<div>
+                     📸 Post #12 - 2024-09-15 18:38:05+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_12_03c1dad2573c65a0416ff36a0b76dc8b.setIcon(icon_0e8f3aaeaeb0a4d1f9d5ae8494ccd405);
+            
+    
+            var marker_13_035c721f4b6a34010ccde9ab4b5d5f68 = L.marker(
+                [4.896976947784424, 114.9210205078125],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_87e46de504cf816edde762af18461e9a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a86df11162de387ad9fb0e6206a2b1f3 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_7ee9f16dda0186d11ce083aaca2b97a4 = $(`<div id="html_7ee9f16dda0186d11ce083aaca2b97a4" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #13</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-16 18:46:53+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍common grill by Collin’s (Marsiling coffeeshop) &lt;br&gt;&lt;br&gt;Easily one of the best western food I’ve ever had!! And it’s in a coffeeshop!!!&lt;br&gt;&lt;br&gt;Stumbled across this when I was walking around looking for food in Marsiling, and GAWD DAMN this western food is LIFE CHANGING 😮‍💨😮‍💨😮‍💨. We ordered their chicken cutlet with pasta, their carbonara, and their crispy onion rings.  The chicken cutlet was legit super crispy and the pasta was cooked to perfection. Easily already a 7/10. The highlight of this dish however would be the tartar sauce. I expected the tartar sauce to taste like McD fillet o fish sauce(I hate that), but omg the sauce was legit so so delicious. It had a similar taste to wingstop ranch, but it’s texture is not as thick. When paired with the chicken, it easily brings this dish up to a 9/10!! 🫨🫨🫨 &lt;br&gt;&lt;br&gt;The carbonara was also CRAZY. The RICH, CREAMY sauce and the Al Dente pasta paired with the super flavourful bacon 🥓… this dish is definitely on another level!!! I am not a carbonara fan but I can vouch that you MUST have this when you come here!! It’s hard to explain through words… so come and try it for urselves 🫢🫢🫢. For the price of only 9.90$, u can’t get any better carbonara out there!! &lt;br&gt;&lt;br&gt;Onion rings were also super crispy as well. Came with fries, but nothing really special about it. Just ur standard sides I guess 😂😂.&lt;br&gt;&lt;br&gt;Overall, I would give this place a 7.5/10 and I will definitely come back again!! Especially since it’s located in a coffeeshop and that it’s cheaper than other western food u can find in shopping malls. For its quality, this is definitely better than any western food u can find in coffee shops. This is a HIDDEN GEM 💎 for me. Do try it if you are in the area and I promise u won’t regret 😋😋😋&lt;br&gt;&lt;br&gt;#food #foodporn #foodphotography #foodstagram #singapore #sg #sgfood #sgfoodie #goodfood #westernfood #ilovefood #foodie #sgeats #sgfoodlover #singaporefood</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 4.896976947784424, 114.9210205078125</p>                     <a href="https://www.instagram.com/p/C_-aZgXyKPh/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_a86df11162de387ad9fb0e6206a2b1f3.setContent(html_7ee9f16dda0186d11ce083aaca2b97a4);
+            
+        
+
+        marker_13_035c721f4b6a34010ccde9ab4b5d5f68.bindPopup(popup_a86df11162de387ad9fb0e6206a2b1f3)
+        ;
+
+        
+    
+    
+            marker_13_035c721f4b6a34010ccde9ab4b5d5f68.bindTooltip(
+                `<div>
+                     📸 Post #13 - 2024-09-16 18:46:53+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_13_035c721f4b6a34010ccde9ab4b5d5f68.setIcon(icon_87e46de504cf816edde762af18461e9a);
+            
+    
+            var marker_14_46fe3b31067a26a2aac6b812a29acd21 = L.marker(
+                [23.96946907043457, 120.96031951904297],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_424993f734e0bf76940ea69ca30863a9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9236f7d294b0ba5cd4efbc813532236b = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_716668098b2f212f23a0d242ece2c377 = $(`<div id="html_716668098b2f212f23a0d242ece2c377" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #14</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-20 18:57:50+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Little Glass Stand&lt;br&gt;&lt;br&gt;Located right smack in the middle of CBD(2 mins walk from Raffles Place MRT), this place offers a wide variety of matcha! We got the Tenerai Matcha Latte and the Wakaba Matcha Latte. &lt;br&gt;&lt;br&gt;The Tenerai Matcha Latte was a 6/10 for me. Tho I can taste the authenticity of the matcha, it was not anything too special for me. It was said to be light and refreshing as well, but I felt that the Wakaba Matcha Latte was more refreshing instead😂😂. For the price of 8.90$, I feel that it did not live up to its price point 😓&lt;br&gt;&lt;br&gt;The Wakaba Matcha Latte was a 7/10 for me. It felt super refreshing when drinking, followed by a strong matcha aftertaste which I prefer more over the other one. I would say that the Wakaba is a better option if you are planning to head down here!!&lt;br&gt;&lt;br&gt;Overall, as a matcha lover, I would say that the quality of matcha here is decent, but for the price im paying, I wouldn’t say it’s exactly worth it. (Maybe when im employed then it’s different). My go to will still be HVALA HAHAHA! Anyways come down and give it a try if you are around the area!! &lt;br&gt;&lt;br&gt;#food #foodporn #foodie #singapore #sg #sgfood #drinks #drink #cafe #latte #matcha #matchalatte #matchalover #cafehopping #singaporelife #foodgasm #drinkcoffee #drinktea #coffeelovers</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 23.96946907043457, 120.96031951904297</p>                     <a href="https://www.instagram.com/p/DAIu1IpyD1v/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_9236f7d294b0ba5cd4efbc813532236b.setContent(html_716668098b2f212f23a0d242ece2c377);
+            
+        
+
+        marker_14_46fe3b31067a26a2aac6b812a29acd21.bindPopup(popup_9236f7d294b0ba5cd4efbc813532236b)
+        ;
+
+        
+    
+    
+            marker_14_46fe3b31067a26a2aac6b812a29acd21.bindTooltip(
+                `<div>
+                     📸 Post #14 - 2024-09-20 18:57:50+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_14_46fe3b31067a26a2aac6b812a29acd21.setIcon(icon_424993f734e0bf76940ea69ca30863a9);
+            
+    
+            var marker_15_8f4963473c5909b5e528babcfc5c000f = L.marker(
+                [34.06414794921875, -118.13458251953125],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_ba59a24014804f0fd2d07c47ef5a8402 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_70520cfe824306b095235b1c413e2454 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_d780f1fd030d8ce2227526f453a2e875 = $(`<div id="html_d780f1fd030d8ce2227526f453a2e875" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #15</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-24 22:12:03+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍keens bagelry ( @keensbagelry )&lt;br&gt;&lt;br&gt;friend of mine brought me down to try this place and I can easily say that no other store in sg has bagels better than here!!😋😋😋THIS IS A COMPLETELY HONEST REVIEW.&lt;br&gt;&lt;br&gt;NOSTALGIA: 8.9/10!! I loved everything about this... the crispy golden brown hashbrowns paired with the lettuce and the luncheon meat 🫨🫨🫨 together with the sunny side up and cheddar cheese🧀😍🤩 it was the perfect&lt;br&gt;mix!!&lt;br&gt;&lt;br&gt;LOXU: 9/10!!!!! IF YOU LOVE SALMON AND CREAM CHEESE YOU MUST GET THIS!! They were super generous with the salmon, and the smoked salmon was super fresh and balanced, without an overpowering fish smell. The best part about this is the ratio of the cream cheese to salmon. The cream cheese is not too strong, so even for people who are not a big fan of cream cheese(Eg me), you can still ENJOY the whole masterpiece without it feeling jelat or oily. The onions and the tomatoes also brought extra flavour. U HAVE TO TRY THIS!!! 😇😇😇&lt;br&gt;&lt;br&gt;Of course you cannot forget the bagels themselves!! The bagels here are really super good. Super crunchy exterior with a soft, dense and slightly sweet interior. 😚There are&lt;br&gt;3 bagel types to choose from as well!! We got the plain one and I can already say that it’s alrdy super delicious. Will definitely come down again to try the sesame one!!&lt;br&gt;&lt;br&gt;Located in the CBD area, with their big ass bagels priced at only 13-16$, I would say that this is a STEAL!! I promise you that the bagels are bigger than what it looks like in pictures and that it’s definitely worth ur money!! 🤗🤗🤗COME DOWN AND TRY!!! 😝😝😝&lt;br&gt;&lt;br&gt;#sg #sgfood #bagel #bagels #cafe #cafeteria #food #foodporn #foodphotography #foodstagram #foodblogger #goodfood #ilovefood #instagram #foodie #singapore #singaporefoodie #foodislife</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 34.06414794921875, -118.13458251953125</p>                     <a href="https://www.instagram.com/p/DATYPL4y1LN/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_70520cfe824306b095235b1c413e2454.setContent(html_d780f1fd030d8ce2227526f453a2e875);
+            
+        
+
+        marker_15_8f4963473c5909b5e528babcfc5c000f.bindPopup(popup_70520cfe824306b095235b1c413e2454)
+        ;
+
+        
+    
+    
+            marker_15_8f4963473c5909b5e528babcfc5c000f.bindTooltip(
+                `<div>
+                     📸 Post #15 - 2024-09-24 22:12:03+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_15_8f4963473c5909b5e528babcfc5c000f.setIcon(icon_ba59a24014804f0fd2d07c47ef5a8402);
+            
+    
+            var marker_16_0920f7fbd3e8cadc4fc9983e1fd8b1a4 = L.marker(
+                [24.827871322631836, 121.02127075195312],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_d7abcbc89fd9246040d87eeed132ac90 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_acfbf1d37bc4d65aa2524e7221660b81 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_24e0cd5cc377b2ae9c631a6d43670190 = $(`<div id="html_24e0cd5cc377b2ae9c631a6d43670190" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #16</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-09-29 18:10:02+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Dai Tao Lala Pot @ mount austin jb!!&lt;br&gt;&lt;br&gt;Have been wanting to try this for the longest time and I can say this definitely did not disappoint 🫨🫨🫨&lt;br&gt;&lt;br&gt;We ordered their daitao signature soup and OMG!! The soup was super sweet and super delicious. It definitely exceeded my expectations😋😋😋. The flavour of the soup was really on point, not too bland or salty!! You can add the wine (花雕酒) into the soup which makes the soup way more flavourful. Add in abit of garlic and chilli padi and the soup IS PERFECT 🤗🤗. The soup is easily 9/10!! Must get this when you come.  And of course not forgetting the clams! There’s arnd 1kg worth of lala inside, which I feel is just nice for 2-3 people.&lt;br&gt;&lt;br&gt;For the ingredients, we ordered their pork shoulder slice, marbled pork slice, chicken slice, signature fish paste and some vegetables. All the meat were super fresh and portions were big as well compared to sg😂 &lt;br&gt;&lt;br&gt;Overall, I feel this place is a must try! It’s cheap compared to the ones we have in Singapore. (spent around 150rm for 2, so roughly 25$ SGD per person) However, the downside will be that there may be long queues during dinner hours and weekends, so make sure to come early to avoid the queue!! It also opens till 3am, so it can be a good supper spot if you’re planning to go jb and have some good food😋😋😋 Can get quite hot sometimes when you are eating as ur outdoors, but no complains cos food is BUSSIN 🤣🤣🤣 I will definitely come back again!! Overall 8/10. &lt;br&gt;&lt;br&gt;#food #foodporn #ilovefood #singapore #hotpot #sg #malaysiafood #singaporefood #foodie #jb #sgfood #daitaolalapot #foodgasm #foodpics #singaporefoodie</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 24.827871322631836, 121.02127075195312</p>                     <a href="https://www.instagram.com/p/DAf0g_6SaRw/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_acfbf1d37bc4d65aa2524e7221660b81.setContent(html_24e0cd5cc377b2ae9c631a6d43670190);
+            
+        
+
+        marker_16_0920f7fbd3e8cadc4fc9983e1fd8b1a4.bindPopup(popup_acfbf1d37bc4d65aa2524e7221660b81)
+        ;
+
+        
+    
+    
+            marker_16_0920f7fbd3e8cadc4fc9983e1fd8b1a4.bindTooltip(
+                `<div>
+                     📸 Post #16 - 2024-09-29 18:10:02+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_16_0920f7fbd3e8cadc4fc9983e1fd8b1a4.setIcon(icon_d7abcbc89fd9246040d87eeed132ac90);
+            
+    
+            var marker_17_1aefcb322c51fc9a17a7ad8bc8877bed = L.marker(
+                [14.552815437316895, 121.02288055419922],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_348b93e5fb36ed229d272459ac865c65 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_20a705e51aa806162a3cb92a270057ab = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_9d5f5e2be4a2724f4def79b52b234001 = $(`<div id="html_9d5f5e2be4a2724f4def79b52b234001" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #17</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-10-06 19:15:54+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍bhc chicken ( @bhc_chicken_sg ) at Marina Square!&lt;br&gt;&lt;br&gt;wanted to try this for the longest time already… and @nonsenseeaterr finally agreed to it 🥳🥳🥳&lt;br&gt;&lt;br&gt;we ordered their bburinkle half chicken(14.90$) and the red king half chicken(23.90$). The bburinkle chicken was super delicious and had lots of cheese and vegetable seasoning that made the chicken super flavorful. Cheese seasoning was not too thicc, so won’t feel jelat when eating it!! 😋😋 As a fried chicken lover, I will rate this an 8/10! Will definitely order this if I come here again! &lt;br&gt;&lt;br&gt;The red king chicken was surprisingly good as well(super underrated!!). It was spicy(not say too spicy), but also had a bit of sweetness as well! The garlic added also made the chicken way more yummy. For those who love spicy food, I would recommend getting this! (Tho it may be slightly pricy😅) This is an 8/10 for me as well! 😄😄 &lt;br&gt;&lt;br&gt;Overall, this place is worth a try!! The quality of the chicken was super duper good(chicken came hot and juicy 😛😛😛) and it’s no doubt better than most of the fried chicken we have in SG. Definitely reminds me of the bhc chicken I had in Korea… 🥹  Will come back again and try the other flavours and dishes as well.😀😀&lt;br&gt;&lt;br&gt;#food #foodporn #foodphotography #foodstagram #foodblogger #chicken #chickenwings #friedchicken #instagood #ilovefood #foodie #sg #sgfood #sgfoodie #bhcchicken #sgeats</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 14.552815437316895, 121.02288055419922</p>                     <a href="https://www.instagram.com/p/DAx9ndmSyO0/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_20a705e51aa806162a3cb92a270057ab.setContent(html_9d5f5e2be4a2724f4def79b52b234001);
+            
+        
+
+        marker_17_1aefcb322c51fc9a17a7ad8bc8877bed.bindPopup(popup_20a705e51aa806162a3cb92a270057ab)
+        ;
+
+        
+    
+    
+            marker_17_1aefcb322c51fc9a17a7ad8bc8877bed.bindTooltip(
+                `<div>
+                     📸 Post #17 - 2024-10-06 19:15:54+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_17_1aefcb322c51fc9a17a7ad8bc8877bed.setIcon(icon_348b93e5fb36ed229d272459ac865c65);
+            
+    
+            var marker_18_12996de96708cfae29a620ecba0b9aa4 = L.marker(
+                [43.815765380859375, -79.34184265136719],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_a0f3319b134be5e486cae00c303866b2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1e65fa029ab6eb81c888d6c7f5b6fae0 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_96c7a5d725031ac0603398e88d34bd64 = $(`<div id="html_96c7a5d725031ac0603398e88d34bd64" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #18</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-10-11 16:45:16+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍xiao long kan hotpot @ orchard!&lt;br&gt;&lt;br&gt;wanted something different from the basic haidilao, so tried this hotpot instead!&lt;br&gt;&lt;br&gt;we ordered their mala soup, tomato soup and pork bone soup. their mala soup was super duper spicy but quite good actually!(resembles more of China type of hotpot where the soup is super oily.) remember to get 小辣if u can’t take spice😭🔥. the pork bone soup was quite flavorful as well, and had a ton of ingredients. as for their tomato soup, it was alright and nothing special(still prefer my haidilao😂😂)&lt;br&gt;&lt;br&gt;As for the ingredients, we ordered their beef, pork and some veg. The beef (slide 3) and the pork(slide 4-6) were both super good! The meat was super tender and fresh, and the marbling of the meat 😮‍💨😮‍💨 quality of the meat felt very premium as well!! (Tho we paid a lot for it…😢)&lt;br&gt;&lt;br&gt;Overall I would say that this place is quite expensive(paid 276$ for 6 people…) and not worth coming🥲 . There was nothing very special about this hotpot place and we did not feel full after the meal as we only ordered a few plates of meat. Not the best hotpot experience HAHAHA ig i will just stick to my usual haidilao or beauty in the pot.&lt;br&gt;&lt;br&gt;#food #foodie #foodporn #foodphotography #foodstagram #foodblogger #sg #sgfood #sgfoodie #ilovefood #singapore #singaporefood #hotpot #china #chinatown #xiaolongkan #soup</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 43.815765380859375, -79.34184265136719</p>                     <a href="https://www.instagram.com/p/DA-kWmRygTU/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_1e65fa029ab6eb81c888d6c7f5b6fae0.setContent(html_96c7a5d725031ac0603398e88d34bd64);
+            
+        
+
+        marker_18_12996de96708cfae29a620ecba0b9aa4.bindPopup(popup_1e65fa029ab6eb81c888d6c7f5b6fae0)
+        ;
+
+        
+    
+    
+            marker_18_12996de96708cfae29a620ecba0b9aa4.bindTooltip(
+                `<div>
+                     📸 Post #18 - 2024-10-11 16:45:16+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_18_12996de96708cfae29a620ecba0b9aa4.setIcon(icon_a0f3319b134be5e486cae00c303866b2);
+            
+    
+            var marker_19_b91e88d8996c6f5cb938f439a28d6ef4 = L.marker(
+                [4.896976947784424, 114.9210205078125],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_5cb9cf0ac393d8cc837637c68c8885b9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_41be6c88c232e1c114a11344c9b88549 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_dfe799e8de4c1bd62d2532b7c5275e0e = $(`<div id="html_dfe799e8de4c1bd62d2532b7c5275e0e" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #19</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-10-25 17:16:37+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍DLLM Lok Lok &lt;br&gt;&lt;br&gt;Tried their loklok for the first time and I can say this is the best loklok I’ve tried in SG!!(better than the dacheng sg outlet )😋😋&lt;br&gt;&lt;br&gt;Ordered a few different items but what stood out to me was their broccoli! As someone who dislikes broccoli😤, gawddamn it was bussin HAHA. Super crispy and when added together with their seasoning, it def hits the right spots 🔥🔥🔥&lt;br&gt;&lt;br&gt;Their pork belly with enoki mushrooms are worth mentioning as well. Deep fried enoki mushrooms give a super crunchy texture when u bite down on it, with their juicy pork belly 😮‍💨😮‍💨. Definitely a must get!!&lt;br&gt;&lt;br&gt;And they also offer maggi mee with egg at 2.50$ only! Though it’s just maggi mee, it was super vibes and it came well together when eating loklok. Highly recommend the curry flavour one especially 👍👍👍&lt;br&gt;&lt;br&gt;Overall I wld rate this an 8/10! A super good dinner/supper spot that opens till 4am. Their loklok is also SUPER DUPER CHEAP at only 1$ per stick! And ofc their hilarious NSFW designs (pic6 onwards) Do give this place a try!! 😁😁😁&lt;br&gt;&lt;br&gt;#food #foodphotography #foodporn #foodstagram #foodblogger #loklok #singapore #singaporefood #sg #sgfood #sgfoodie #sgfoodies #sgeats #ilovefood #supper #dinner #goodfood</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 4.896976947784424, 114.9210205078125</p>                     <a href="https://www.instagram.com/p/DBirEdpygoY/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_41be6c88c232e1c114a11344c9b88549.setContent(html_dfe799e8de4c1bd62d2532b7c5275e0e);
+            
+        
+
+        marker_19_b91e88d8996c6f5cb938f439a28d6ef4.bindPopup(popup_41be6c88c232e1c114a11344c9b88549)
+        ;
+
+        
+    
+    
+            marker_19_b91e88d8996c6f5cb938f439a28d6ef4.bindTooltip(
+                `<div>
+                     📸 Post #19 - 2024-10-25 17:16:37+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_19_b91e88d8996c6f5cb938f439a28d6ef4.setIcon(icon_5cb9cf0ac393d8cc837637c68c8885b9);
+            
+    
+            var marker_20_773c316b21eb3044e9ee2f7b9e1ff482 = L.marker(
+                [35.53016662597656, 139.6978302001953],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_ee398c3f5c1fd401085d377c3355f73c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aa72d135d35e39921baf1ab58a6ae979 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_a477ebde257e0f95880b1ecdf3980084 = $(`<div id="html_a477ebde257e0f95880b1ecdf3980084" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #20</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2024-11-25 20:26:26+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍ramen bari-uma (273 Thomson Road)&lt;br&gt;&lt;br&gt;came across this on tiktok saying this is the richest tonkotsu ramen in sg… so OBVIOUSLY bro had to go down and try it 😛😛😛 &lt;br&gt;&lt;br&gt;we ordered the ajitama-uma($15.90) and karatama-uma($17.90), with a plate of chashu($10.90), edamame($4.00) and their pan fried gyoza($7.90). &lt;br&gt;&lt;br&gt;the ramen broth was SUPER DUPER THICC and the noodles were super tangy as well!! The taste was super balanced,not too salty yet still tasty. 😋😋😋 The chashu was also frickin tender 🤩🤩, probably one of the BEST, if not the BEST chashu I’ve eaten in a ramen ngl. The egg was also super runny, loved the consistency of it and how it’s cooked to perfection 😍😍😍. If you are looking for something spicy, then definitely get the spicy one. SUPER FLAVORFUL😙😙😙. Don’t believe me? See pic 8 for evidence 😎&lt;br&gt;&lt;br&gt;Their pan-fried Gyozas are also a MUST GET WHEN UR THERE!! The amazing chaoda and crispy layer at the bottom makes the gyoza 1000000x better. PROMISE ITS GOOD!!! 👍 Not to forget their edamame also rocks.(not sure why, my mom said it’s nice so i will just add it here lol)&lt;br&gt;&lt;br&gt;Overall, would give this place an 8/10!! The store was super vibes and reminded me a lil bit of japan 😂 Def one of the better bowls of ramen you can have in sg, tho it may be a lil pricey for the location(that’s the price u have to pay for good food ig😂😂) I will def be back here again to have more ramen HAHA. Come down and try it for urselves 👍👍👍&lt;br&gt;&lt;br&gt;#food #goodfood #dinner #supper #ilovefood #instagram #foodporn #foodie #foodstagram #foodblogger #ramen #iloveramen🍜 #singapore #sg #sgfood #sgfoodie #sgfoodies #sgeats #instafood #foodies</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 35.53016662597656, 139.6978302001953</p>                     <a href="https://www.instagram.com/p/DCy1b18SLC2/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_aa72d135d35e39921baf1ab58a6ae979.setContent(html_a477ebde257e0f95880b1ecdf3980084);
+            
+        
+
+        marker_20_773c316b21eb3044e9ee2f7b9e1ff482.bindPopup(popup_aa72d135d35e39921baf1ab58a6ae979)
+        ;
+
+        
+    
+    
+            marker_20_773c316b21eb3044e9ee2f7b9e1ff482.bindTooltip(
+                `<div>
+                     📸 Post #20 - 2024-11-25 20:26:26+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_20_773c316b21eb3044e9ee2f7b9e1ff482.setIcon(icon_ee398c3f5c1fd401085d377c3355f73c);
+            
+    
+            var marker_21_0c360c3eb4a310b7016ea24bfc16dd04 = L.marker(
+                [29.99049949645996, 102.99700927734375],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_a540537090776dda82be2c34186a01cb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_db3d81d99a00e68e24267032e85454ad = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_532b36ef24f6e90abf7c47fbfdbb61ec = $(`<div id="html_532b36ef24f6e90abf7c47fbfdbb61ec" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #21</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2025-04-22 16:40:43+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Tiantai Hotpot (shanyuzhong)&lt;br&gt;&lt;br&gt;Located at the rooftop of people park complex, this restaurant serves authentic Chongqing hotpot!The space also matches the vibe of Chongqing as well!(hearsay the owner of this restaurant was from Chongqing as well😏) &lt;br&gt;&lt;br&gt;The star of the show is definitely the Mala soup base! Super thick and rich in flavour, and mad spicy as well(they have options till weiweila for those who can’t take spice!) &lt;br&gt;&lt;br&gt;Their dishes are super affordable as well 😌one plate of meat costs roughly 9$! Meat was super fresh as well, especially their beef (pic3). Super tender and flavourful!!😀😀&lt;br&gt;The veg also quite cheap, with their  potato slices at 1$ and enoki mushrooms at only 4$! 🤯🤯🤯 &lt;br&gt;&lt;br&gt;Lastly, their brown sugar jelly is a must get when you head down to this restaurant! At only 1$, this bowl of brown sugar jelly with raisins inside is the perfect desert after a hot and spicy meal of hotpot! Def a must try!! 🔥🔥🔥&lt;br&gt;&lt;br&gt;Overall would give this place a 8.5/10! Super affordable for a place located in town, def a good and affordable alternative! &lt;br&gt;&lt;br&gt;#singapore #singaporefood #food #foodie #ilovefood #foodporn #instagood #sgfood #sgfoodie #dinner #hotpot #hotpot🍲</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 29.99049949645996, 102.99700927734375</p>                     <a href="https://www.instagram.com/p/DIvhQLlSmMx/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_db3d81d99a00e68e24267032e85454ad.setContent(html_532b36ef24f6e90abf7c47fbfdbb61ec);
+            
+        
+
+        marker_21_0c360c3eb4a310b7016ea24bfc16dd04.bindPopup(popup_db3d81d99a00e68e24267032e85454ad)
+        ;
+
+        
+    
+    
+            marker_21_0c360c3eb4a310b7016ea24bfc16dd04.bindTooltip(
+                `<div>
+                     📸 Post #21 - 2025-04-22 16:40:43+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_21_0c360c3eb4a310b7016ea24bfc16dd04.setIcon(icon_a540537090776dda82be2c34186a01cb);
+            
+    
+            var marker_22_83921276908ee78e2b68e66d92301f1e = L.marker(
+                [22.15250015258789, 113.55933380126953],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_9629a7a657d4a9466e8c46def5ef2e1c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a03f319af640a3736203d481e2ab4740 = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_81fef7e7b21c1ce60dd0d4b1002affbe = $(`<div id="html_81fef7e7b21c1ce60dd0d4b1002affbe" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #22</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2025-04-29 13:33:11+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Roland ZiChar Restaurant&lt;br&gt;&lt;br&gt;Located in the East side of Singapore, this seafood Zichar restaurant is known especially for its chili crab!! (It’s said that this restaurant is the BIRTHPLACE of Chili crab itself, so… u can expect super good Chili crab here 😏😏)&lt;br&gt;&lt;br&gt;Their chili crab is definitely the best dish here. The crab was fresh, meat was tender, and sauce was super rich in flavour. 😱😱😱It had the right amount of spice in it and the egg in the sauce gave it a silky and creamy texture. 😆😆😆 Definitely a dish worth ordering when you are here!!&lt;br&gt;&lt;br&gt;Their other seafood dishes(black sauce prawns on slide 4 and their sea bass on slide 10) were amazing as well! Black sauce had a savoury sweet bland, where they combined soy sauce together with other aromatics to create this layer of glaze that clings to each prawn!! Prawns used were big too! 👍👍 Loved their fish as well, the soup wasn’t too strong nor too bland. Fish was cooked to perfection 😁&lt;br&gt;&lt;br&gt;Overall, this place definitely serves super good and high quality zichar with reasonable and large portions, though it may def be on the pricier side.(got the special birthday menu that day!) Do come down and give it a try, ESPECIALLY THEIR CHILI CRAB!! RLLY THINK THIS IS ONE OF THE BEST CHILLI CRABS IVE EATEN HAHAHAHAHA&lt;br&gt;&lt;br&gt;#food #foodgasm #seafood #seafoodlovers #singapore #singaporefood #sgfood #instagram #insta #goodfood #ilovefood #hiddengem #restaurant #chilicrab #zichar #foodies #foodie</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 22.15250015258789, 113.55933380126953</p>                     <a href="https://www.instagram.com/p/DJBNWymyW4j/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_a03f319af640a3736203d481e2ab4740.setContent(html_81fef7e7b21c1ce60dd0d4b1002affbe);
+            
+        
+
+        marker_22_83921276908ee78e2b68e66d92301f1e.bindPopup(popup_a03f319af640a3736203d481e2ab4740)
+        ;
+
+        
+    
+    
+            marker_22_83921276908ee78e2b68e66d92301f1e.bindTooltip(
+                `<div>
+                     📸 Post #22 - 2025-04-29 13:33:11+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_22_83921276908ee78e2b68e66d92301f1e.setIcon(icon_9629a7a657d4a9466e8c46def5ef2e1c);
+            
+    
+            var marker_23_ae2a13b93d8088f386020befec103fe7 = L.marker(
+                [23.988134384155273, 121.60079956054688],
+                {
+}
+            ).addTo(map_715e4c0207ede0537cb6fb5a14d6e394);
+        
+    
+            var icon_7175812fd80a7cfb9c02ebf7b7eb33e8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "camera",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d3de577ad0c34d70df5eb9905c710c9a = L.popup({
+  "maxWidth": 440,
+});
+
+        
+            
+                var html_b89b50031e13b5591ff3cd9da989847a = $(`<div id="html_b89b50031e13b5591ff3cd9da989847a" style="width: 100.0%; height: 100.0%;">         <div style="width: 400px; max-height: 600px; overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">             <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);                          padding: 15px; color: white;">                 <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Post #23</h3>                 <p style="margin: 5px 0 0 0; font-size: 13px; opacity: 0.9;">📅 2025-05-11 15:50:01+08:00</p>             </div>             <div style="padding: 0; background: white;">                 <div style="background: #fafafa; padding: 10px;">                                      </div>                 <div style="padding: 15px;">                     <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; color: #262626;">📍Founders Bak Kut Teh &lt;br&gt;&lt;br&gt;Def one of the best Bak Kut Teh restaurants in Singapore!! &lt;br&gt;&lt;br&gt;Ordered their “Founder Popularity Bak Kut Teh”(slide 2) and and their “Founder Bak Kut Teh” (slide 4) and safe to say their meat is super duper tender!! 😋😋😋The meat was also super fresh and did not have any foul smell to it. Quality of the meat is definitely there, way better than the average Bak Kut teh chains u can find in shopping malls. 🤣&lt;br&gt;&lt;br&gt;Really love their soup as well, super rich in flavour. One thing that stands out for the soup will be the peppery taste it has, def makes the soup a lil bit more spicy, but it also makes it way more flavourful. The long-simmered pork ribs infuse the soup with a deep umami taste, balanced by the warm sweetness of the garlic. Def must come here if you’re looking for good BKT!! 😏😁&lt;br&gt;&lt;br&gt;Their side dishes, such as the salted veg and youtiao were pretty good as well! Tho the youtiao didn’t have anything special to it, the salted vegs packs a garlicky flavour, with the right amount of saltiness. Worth ordering!! 🥰🥰🥰&lt;br&gt;&lt;br&gt;Overall, Founders Bak Kut Teh offers a very traditional and authentic dining experience. I would say it’s worth travelling down and enjoy a good bowl of Bak Kut teh, so come down for urselves and try it!! 😀😀😀&lt;br&gt;&lt;br&gt;#singapore #food #foodporn #foodphotography #foodstagram #sg #sgfood #sgfoodie #goodfood #chinesefood #ilovefood #foodie #sgeats #sgfoodlover #singaporefood #chinesefoodlover #tourism</p>                     <p style="margin: 5px 0; font-size: 12px; color: #8e8e8e;">🌍 23.988134384155273, 121.60079956054688</p>                     <a href="https://www.instagram.com/p/DJgWja8SRyi/" target="_blank" style="display: block; margin-top: 12px; background: #0095f6; color: white; padding: 10px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Full Post on Instagram →</a>                 </div>             </div>         </div>         </div>`)[0];
+                popup_d3de577ad0c34d70df5eb9905c710c9a.setContent(html_b89b50031e13b5591ff3cd9da989847a);
+            
+        
+
+        marker_23_ae2a13b93d8088f386020befec103fe7.bindPopup(popup_d3de577ad0c34d70df5eb9905c710c9a)
+        ;
+
+        
+    
+    
+            marker_23_ae2a13b93d8088f386020befec103fe7.bindTooltip(
+                `<div>
+                     📸 Post #23 - 2025-05-11 15:50:01+08:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_23_ae2a13b93d8088f386020befec103fe7.setIcon(icon_7175812fd80a7cfb9c02ebf7b7eb33e8);
+            
+</script>
+</html>

@@ -16,7 +16,7 @@ from datetime import datetime
 
 def load_posts(json_file):
     """Load posts from JSON file"""
-    with open(json_file, 'r') as f:
+    with open(json_file, 'r', encoding="utf-8") as f:
         return json.load(f)
 
 def image_to_base64(image_path):
@@ -31,12 +31,9 @@ def image_to_base64(image_path):
 def parse_date(date_str):
     """Parse date string to datetime object"""
     try:
-        return datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+        return datetime.fromisoformat(date_str)
     except:
-        try:
-            return datetime.strptime(date_str, '%Y-%m-%d')
-        except:
-            return None
+        return None
 
 def create_map(posts, output_file='social_media_map.html'):
     """Create an interactive map with all post locations"""
@@ -341,7 +338,7 @@ def create_map(posts, output_file='social_media_map.html'):
     return output_file
 
 def main():
-    json_file = 'posts.json'
+    json_file = 'output.json'
     
     try:
         posts = load_posts(json_file)
