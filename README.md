@@ -9,17 +9,18 @@ Geol0c4t ("Geolocate") is an OSINT tool for building a geographic visualisation 
 3. Geol0c4t will attempt to determine each post's location through various image geolocation techniques (neural-network, EXIF metadata, reverse image search, etc)
 4. Finally, Geol0c4t renders a geographic visualisation of the post locations on an interactive world map. The user can filter posts based on keyword search and timeline slider.
 
-# Development
-```
-# Activate virtual environment (requires a virtual environment setup).
-.venv/scripts/activate
+# Set up
+Two virtual environments are required
+python3.12 (geoclip_venv)
+- torch
+- geoclip
 
-# Install required dependencies.
-pip install -r requirements.txt
+python3.14 (venv)
+- instaloader
+- argparse
+- folium
 
-# Save required dependencies (if any new ones are added).
-pip freeze > requirements.txt
-```
+run main.py on venv
 
 # Project structure
 Geol0c4t/
